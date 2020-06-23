@@ -1,4 +1,4 @@
-# Pinning Service API Specifications
+# Pinning Service API Spec
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai)
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](https://ipfs.io/)
@@ -7,6 +7,7 @@
 > This repository contains the specs for the vendor-agnostic pinning service API for the IPFS ecosystem
 
 - [About](#about)
+- [Specification](#specification)
 - [Timeline](#timeline)
 - [Contribute](#contribute)
 
@@ -17,6 +18,9 @@ A Pinning Service is a service that accepts [CIDs](https://github.com/ipld/cid/)
 The rationale behind defining a generic pinning service API is to have a baseline functionality and interface that can be provided by these services so that tools can be built on top of a common base of functionality.
 
 
+## Specification
+
+* [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml) ![wip](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) [![validation](https://validator.swagger.io/validator?url=https://raw.githubusercontent.com/ipfs/pinning-services-api-spec/master/ipfs-pinning-service.yaml)](http://online.swagger.io/validator/debug?url=https://raw.githubusercontent.com/ipfs/pinning-services-api-spec/master/ipfs-pinning-service.yaml)
 
 ## Timeline
 

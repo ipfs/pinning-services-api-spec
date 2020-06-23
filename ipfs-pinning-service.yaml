@@ -1,0 +1,248 @@
+openapi: 3.0.0
+info:
+  version: "0.0.1"
+  title: 'IPFS Pinning Service API'
+  description: "This is the IPFS Pinning Service API. It attempts to be an
+    implementation-agnostic API designed to be implemented by Pinning Service
+    Providers.
+
+
+    This specification does **NOT** define the IPFS pinning API.
+
+
+    GitHub discussion around this API can be found in [ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).
+
+
+
+    **Critical Notice**
+
+
+    To allow backend systems behind the API to associate pins with a particular
+    user, the API requires that a JSON Web Token is passed with requests that
+    contains a `sub` claim (as specified by
+    [OpenIDConnect Standard Claims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims))
+    that represents the user's identity within the backend system, so as to
+    associate the user with their pins. This allows the backend system to use
+    the identity as a form of reference counting on pins, therefore only
+    removing pins once no other users have it pinned."
+
+servers:
+  - url: https://api.example.com
+paths:
+  /pins:
+    get:
+      summary: Get all pins
+      tags:
+        - pins
+      description: Get all the pins for the current user.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PinStatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      summary: Add an array of pins
+      tags:
+        - pins
+      description: Add an array of pins for the current user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pin'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /pins/{cid}:
+    parameters:
+      - name: cid
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get status of a Pin
+      tags:
+        - pins
+      description: Get status of a Pin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinStatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pinReplicationParam'
+        - $ref: '#/components/parameters/pinMetaParam'
+      summary: Add a new Pin
+      tags:
+        - pins
+      description: If the parameters are valid, the server will return an 'Accepted' response. T
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      summary: Remove a Pin
+      tags:
+        - pins
+      description: Remove a Pin
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
+    Cid:
+      type: object
+      properties:
+        /:
+          type: string
+
+    Metadata:
+      type: object
+      additionalProperties:
+        type: string
+
+    ReplicationFactor:
+      type: integer
+      minimum: -1
+
+    PinStatus:
+      type: object
+      properties:
+        peername:
+          type: string
+        peer:
+          type: string
+        error:
+          type: string
+        pin:
+          $ref: '#/components/schemas/Pin'
+        status:
+          type: string
+
+    Pin:
+      type: object
+      properties:
+        cid:
+          $ref: '#/components/schemas/Cid'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        replication:
+          $ref: '#/components/schemas/ReplicationFactor'
+
+  parameters:
+    pinReplicationParam:
+      name: replication
+      in: query
+      schema:
+        $ref: '#/components/schemas/ReplicationFactor'
+
+    pinMetaParam:
+      name: meta
+      description: Associate metadata strings with a Pin.
+      in: query
+      schema:
+        $ref: '#/components/schemas/Metadata'
+
+  responses:
+    BadRequest:
+      description: Bad Request (400)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    Unauthorized:
+      description: Unauthorized (401)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFound:
+      description: The specified resource was not found (404)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InsufficientFunds:
+      description: Insufficient Funds (409)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalServerError:
+      description: Internal Server Error (500)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - tokenAuth: []
+
