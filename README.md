@@ -22,6 +22,7 @@ The rationale behind defining a generic pinning service API is to have a baselin
 ## Specification
 
 * [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml) [![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=master)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amaster) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) 
+  * [Human-readable API docs](https://ipfs.github.io/pinning-services-api-spec/)
 
 ## Timeline
 
@@ -32,7 +33,7 @@ The rationale behind defining a generic pinning service API is to have a baselin
 - 2020 Q3
   - IPFS GUI Team looking into adding support for Pinning Services into Desktop apps
     - [Epic: Pinning service integration · Issue #91 · ipfs/ipfs-gui](https://github.com/ipfs/ipfs-gui/issues/91)
-    - **[WIP]** Analysis of Remote Pinning Services vs the needs of IPFS WebUI 
+    - [Analysis of Remote Pinning Services vs the needs of IPFS WebUI](https://docs.google.com/document/d/1f0R7woLtW_YTv9P9IOrUNK6QafgctJ7qTggEUdepD_c/)
   - [ipfs/pinning-services-api-specs](https://github.com/ipfs/pinning-services-api-specs) is created as a place for stakeholders to collaborate and finalize the API
 
 
