@@ -22,7 +22,7 @@ The rationale behind defining a generic pinning service API is to have a baselin
 ## Specification
 
 * [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml) [![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=master)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amaster) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) 
-  * [Human-readable API docs](https://ipfs.github.io/pinning-services-api-spec/)
+* [Human-readable API docs](https://ipfs.github.io/pinning-services-api-spec/) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
 ## Timeline
 
