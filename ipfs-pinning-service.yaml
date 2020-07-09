@@ -36,6 +36,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/cid'
         - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/depth'
         - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/auth'
@@ -239,7 +240,7 @@ components:
         type: array
         items:
           type: string
-      style: form
+      style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       examples:
         oneId:
@@ -250,7 +251,7 @@ components:
           value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
 
     depth:
-      description: return pin objects for all nodes under the specified DAG depth (requires root CID)
+      description: return pin objects only for pins with the specified depth
       name: depth
       in: query
       required: false
@@ -258,10 +259,10 @@ components:
         type: string
       examples:
         recursive:
-          summary: Example of a recursive pin
+          summary: recursive pin
           value: -1
         direct:
-          summary: Example of direct pin
+          summary: direct pin
           value: 0
 
     status:
@@ -273,7 +274,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Status'
-      style: form
+      style: form # ?status=a,b,c
       explode: false
 
     auth:
