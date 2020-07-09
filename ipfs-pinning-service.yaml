@@ -196,6 +196,10 @@ components:
     PinStatus:
       description: Pin object with Status
       type: object
+      required:
+        - id
+        - status
+        - pin
       properties:
         id:
           description: CID of Pin object that can be used for status checks of ongoing pinning
@@ -204,10 +208,14 @@ components:
           $ref: '#/components/schemas/Status'
         pin:
           $ref: '#/components/schemas/Pin'
+        meta:
+          $ref: '#/components/schemas/Meta'
 
     Pin:
       description: Pin object
       type: object
+      required:
+        - cid
       properties:
         cid:
           description: CID to be pinned
@@ -220,17 +228,17 @@ components:
           minimum: -1
         meta:
           $ref: '#/components/schemas/Meta'
-      required:
-      - cid
 
     Status:
       description: Status in which pin object can exist at a pinning service
       type: string
       enum:
-        - pinned
-        - pinning  # in-progress
-        - removing # in-progress
-        - expired  # still pinned for some time, but run out of funds and is not provided to the IPFS network
+        - resolving  # pinning in-progress: verifying pin request and looking for providers
+        - retrieving # pinning in-progress: connected to at least one provider and fetched at least one block
+        - pinned     # pinned successfully
+        - failed     # pining service was unable to finish pinning operation
+        - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
+        - unpinning  # (optional) unpinning in-progress
 
     Meta:
       description: Optional metadata for Pin object
@@ -241,6 +249,9 @@ components:
     Error:
       description: Base Error object
       type: object
+      required:
+        - code
+        - message
       properties:
         code:
           type: integer
