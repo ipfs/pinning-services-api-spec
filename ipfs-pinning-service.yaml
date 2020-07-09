@@ -2,50 +2,58 @@ openapi: 3.0.0
 info:
   version: "0.0.2"
   title: '(WIP) IPFS Pinning Service API'
-  description: "# About
+  description: "
+# About
 
-    This is the IPFS Pinning Service API. It attempts to be an
-    implementation-agnostic API designed to be implemented by Pinning Service
-    Providers and used in client mode by IPFS nodes and GUI applications.
+This is the IPFS Pinning Service API. It attempts to be an
+implementation-agnostic API designed to be implemented by Pinning Service
+Providers and used in client mode by IPFS nodes and GUI applications.
 
-    ## THIS SPEC IS WORK IN PROGRESS 🏗️
+## THIS SPEC IS WORK IN PROGRESS 🏗️
 
-    Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
+Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
 
-    # Pin object lifecycle
+# Pin object lifecycle
 
-    ## Creating pin
+## Creating a new pin
 
-    User creates pin object via `POST /pins` and receives `PinStatus` response
+User creates pin object via `POST /pins` and receives `PinStatus` response
 
-    - `id` in `PinStatus` is `cid-of-pin-object` that can be used for modifying and removing pin in the future
+- `id` in `PinStatus` is `cid-of-pin-object` that can be used for modifying
+  and removing pin in the future
 
-    - `status` in  `PinStatus` indicates current state of a pin
+- `status` in  `PinStatus` indicates current state of a pin
 
-    ### Checking status of pinning in progress
 
-    `status` from `PinStatus` may indicate a pending state. It means the data behind `Pin.cid` was not found on pinning service and is being fetched from IPFS network, which may take time.
+### Checking status of pinning in progress
 
-    In that case, user can periodically check pinning progress via `GET /pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove pending pin.
+`status` from `PinStatus` may indicate a pending state. It means the data
+behind `Pin.cid` was not found on pinning service and is being fetched from
+IPFS network, which may take time.
 
-    ## Modifying pin object
+In that case, user can periodically check pinning progress via `GET
+/pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove
+pending pin.
 
-    User may decide to modify existing pin object via `POST /pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus` response. The old pin object is deleted automatically.
+## Modifying existing pin object
 
-    ## Removing pin object
+User may decide to modify existing pin object via `POST
+/pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus`
+response. The old pin object is deleted automatically.
 
-    Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
+## Removing a pin object
 
-    # Authorization
+Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
 
-    An opaque auth token is required to be sent with each request.
-    There are two ways of doing so:
+# Authorization
 
-    - HTTP header: `Authorization: Bearer <auth>`
+An opaque auth token is required to be sent with each request.
+There are two ways of doing so:
 
-    - query parameter: `&auth=<auth>`
+- HTTP header: `Authorization: Bearer <auth>`
 
-  "
+- query parameter: `&auth=<auth>`
+"
 
 servers:
   - url: https://api.example.com
@@ -241,7 +249,7 @@ components:
         - unpinning  # (optional) unpinning in-progress
 
     Meta:
-      description: Optional metadata for Pin object
+      description: Optional metadata
       type: object
       additionalProperties:
         type: string
