@@ -12,6 +12,30 @@ info:
 
     Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
 
+    # Pin object lifecycle
+
+    ## Creating pin
+
+    User creates pin object via `POST /pins` and receives `PinStatus` response
+
+    - `id` in `PinStatus` is `cid-of-pin-object` that can be used for modifying and removing pin in the future
+
+    - `status` in  `PinStatus` indicates current state of a pin
+
+    ### Checking status of pinning in progress
+
+    `status` from `PinStatus` may indicate a pending state. It means the data behind `Pin.cid` was not found on pinning service and is being fetched from IPFS network, which may take time.
+
+    In that case, user can periodically check pinning progress via `GET /pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove pending pin.
+
+    ## Modifying pin object
+
+    User may decide to modify existing pin object via `POST /pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus` response. The old pin object is deleted automatically.
+
+    ## Removing pin object
+
+    Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
+
     # Authorization
 
     An opaque auth token is required to be sent with each request.
@@ -71,6 +95,12 @@ paths:
       responses:
         '202':
           description: Accepted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PinStatus'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -128,6 +158,10 @@ paths:
       responses:
         '202':
           description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinStatus'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -164,10 +198,13 @@ components:
       description: Pin object with Status
       type: object
       properties:
-        pin:
-          $ref: '#/components/schemas/Pin'
+        id:
+          description: CID of Pin object that can be used for status checks of ongoing pinning
+          type: string
         status:
           $ref: '#/components/schemas/Status'
+        pin:
+          $ref: '#/components/schemas/Pin'
 
     Pin:
       description: Pin object
