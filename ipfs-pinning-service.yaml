@@ -60,7 +60,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/cid'
         - $ref: '#/components/parameters/status'
-        - $ref: '#/components/parameters/depth'
         - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/auth'
@@ -286,21 +285,6 @@ components:
         multipleIds:
           summary: Example of multiple CIDs
           value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
-
-    depth:
-      description: return pin objects only for pins with the specified depth
-      name: depth
-      in: query
-      required: false
-      schema:
-        type: string
-      examples:
-        recursive:
-          summary: recursive pin
-          value: -1
-        direct:
-          summary: direct pin
-          value: 0
 
     status:
       description: return pin objects for pins in the specified status
