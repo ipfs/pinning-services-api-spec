@@ -1,40 +1,76 @@
 openapi: 3.0.0
 info:
-  version: "0.0.1"
-  title: 'IPFS Pinning Service API'
-  description: "This is the IPFS Pinning Service API. It attempts to be an
-    implementation-agnostic API designed to be implemented by Pinning Service
-    Providers.
+  version: "0.0.2"
+  title: '(WIP) IPFS Pinning Service API'
+  description: "
+# About
+
+This is the IPFS Pinning Service API. It attempts to be an
+implementation-agnostic API designed to be implemented by Pinning Service
+Providers and used in client mode by IPFS nodes and GUI applications.
+
+## THIS SPEC IS WORK IN PROGRESS 🏗️
+
+Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
+
+# Pin object lifecycle
+
+## Creating a new pin
+
+User creates pin object via `POST /pins` and receives `PinStatus` response
+
+- `id` in `PinStatus` is `cid-of-pin-object` that can be used for modifying
+  and removing pin in the future
+
+- `status` in  `PinStatus` indicates current state of a pin
 
 
-    This specification does **NOT** define the IPFS pinning API.
+### Checking status of pinning in progress
 
+`status` from `PinStatus` may indicate a pending state. It means the data
+behind `Pin.cid` was not found on pinning service and is being fetched from
+IPFS network, which may take time.
 
-    GitHub discussion around this API can be found in [ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).
+In that case, user can periodically check pinning progress via `GET
+/pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove
+pending pin.
 
+## Modifying existing pin object
 
+User may decide to modify existing pin object via `POST
+/pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus`
+response. The old pin object is deleted automatically.
 
-    **Critical Notice**
+## Removing a pin object
 
+Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
 
-    To allow backend systems behind the API to associate pins with a particular
-    user, the API requires that a JSON Web Token is passed with requests that
-    contains a `sub` claim (as specified by
-    [OpenIDConnect Standard Claims](https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims))
-    that represents the user's identity within the backend system, so as to
-    associate the user with their pins. This allows the backend system to use
-    the identity as a form of reference counting on pins, therefore only
-    removing pins once no other users have it pinned."
+# Authorization
+
+An opaque auth token is required to be sent with each request.
+There are two ways of doing so:
+
+- HTTP header: `Authorization: Bearer <auth>`
+
+- query parameter: `&auth=<auth>`
+"
 
 servers:
   - url: https://api.example.com
+
 paths:
   /pins:
     get:
-      summary: Get all pins
+      summary: List pin objects
+      description: List all the pin objects and status matching optional parameters
       tags:
         - pins
-      description: Get all the pins for the current user.
+      parameters:
+        - $ref: '#/components/parameters/cid'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -49,10 +85,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Add an array of pins
+      summary: Add an array of pin objects
+      description: Add an array of pin objects for the current user
       tags:
         - pins
-      description: Add an array of pins for the current user.
+      parameters:
+        - $ref: '#/components/parameters/auth'
       requestBody:
         required: true
         content:
@@ -64,6 +102,12 @@ paths:
       responses:
         '202':
           description: Accepted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PinStatus'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -75,18 +119,21 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /pins/{cid}:
+  /pins/{cid-of-pin-object}:
     parameters:
-      - name: cid
+      - name: cid-of-pin-object
         in: path
         required: true
         schema:
           type: string
+      - $ref: '#/components/parameters/auth'
     get:
-      summary: Get status of a Pin
+      summary: Get pin object
+      description: Get pin object with status
       tags:
         - pins
-      description: Get status of a Pin
+      parameters:
+        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -100,18 +147,28 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
-
     post:
-      parameters:
-        - $ref: '#/components/parameters/pinReplicationParam'
-        - $ref: '#/components/parameters/pinMetaParam'
-      summary: Add a new Pin
+      summary: Modify pin object
+      description: Modifies existing pin object
       tags:
         - pins
-      description: If the parameters are valid, the server will return an 'Accepted' response. T
+      parameters:
+        - $ref: '#/components/parameters/auth'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pin'
       responses:
         '202':
           description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PinStatus'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -123,10 +180,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     delete:
-      summary: Remove a Pin
+      summary: Remove pin object
+      description: Remove pin object
       tags:
         - pins
-      description: Remove a Pin
+      parameters:
+        - $ref: '#/components/parameters/auth'
       responses:
         '202':
           description: Accepted
@@ -141,66 +200,134 @@ paths:
 
 components:
   schemas:
-    Error:
+
+    PinStatus:
+      description: Pin object with Status
       type: object
+      required:
+        - id
+        - status
+        - pin
+      properties:
+        id:
+          description: CID of Pin object that can be used for status checks of ongoing pinning
+          type: string
+        status:
+          $ref: '#/components/schemas/Status'
+        pin:
+          $ref: '#/components/schemas/Pin'
+        meta:
+          $ref: '#/components/schemas/Meta'
+
+    Pin:
+      description: Pin object
+      type: object
+      required:
+        - cid
+      properties:
+        cid:
+          description: CID to be pinned
+          type: string
+        depth:
+          description: Defines how deep the DAG should be pinned (-1 recursive, 0 direct)
+          type: integer
+          format: int32
+          default: -1
+          minimum: -1
+        meta:
+          $ref: '#/components/schemas/Meta'
+
+    Status:
+      description: Status in which pin object can exist at a pinning service
+      type: string
+      enum:
+        - resolving  # pinning in-progress: verifying pin request and looking for providers
+        - retrieving # pinning in-progress: connected to at least one provider and fetched at least one block
+        - pinned     # pinned successfully
+        - failed     # pining service was unable to finish pinning operation
+        - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
+        - unpinning  # (optional) unpinning in-progress
+
+    Meta:
+      description: Optional metadata
+      type: object
+      additionalProperties:
+        type: string
+
+    Error:
+      description: Base Error object
+      type: object
+      required:
+        - code
+        - message
       properties:
         code:
           type: integer
         message:
           type: string
 
-    Cid:
-      type: object
-      properties:
-        /:
-          type: string
-
-    Metadata:
-      type: object
-      additionalProperties:
-        type: string
-
-    ReplicationFactor:
-      type: integer
-      minimum: -1
-
-    PinStatus:
-      type: object
-      properties:
-        peername:
-          type: string
-        peer:
-          type: string
-        error:
-          type: string
-        pin:
-          $ref: '#/components/schemas/Pin'
-        status:
-          type: string
-
-    Pin:
-      type: object
-      properties:
-        cid:
-          $ref: '#/components/schemas/Cid'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-        replication:
-          $ref: '#/components/schemas/ReplicationFactor'
-
   parameters:
-    pinReplicationParam:
-      name: replication
-      in: query
-      schema:
-        $ref: '#/components/schemas/ReplicationFactor'
 
-    pinMetaParam:
-      name: meta
-      description: Associate metadata strings with a Pin.
+    skip:
+      description: number of items to skip
+      name: skip
       in: query
+      required: false
       schema:
-        $ref: '#/components/schemas/Metadata'
+        type: integer
+        format: int32
+        default: 0
+
+    limit:
+      description: max records to return
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 1000
+        default: 1000
+
+    cid:
+      description: return pin objects for the specified CID(s)
+      name: cid
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      style: form # ?cid=Qm1,Qm2,bafy3
+      explode: false
+      examples:
+        oneId:
+          summary: Example of a single CID
+          value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR]   # ?cid=Qm
+        multipleIds:
+          summary: Example of multiple CIDs
+          value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
+
+    status:
+      description: return pin objects for pins in the specified status
+      name: status
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Status'
+      style: form # ?status=a,b,c
+      explode: false
+
+    auth:
+      description: optional auth token (alternative to Authorization header)
+      name: auth
+      in: query
+      required: false
+      schema:
+        type: string
 
   responses:
     BadRequest:
@@ -242,7 +369,5 @@ components:
     tokenAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT
 security:
   - tokenAuth: []
-
