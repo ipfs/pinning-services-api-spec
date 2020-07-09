@@ -267,6 +267,9 @@ components:
       schema:
         type: integer
         format: int32
+        minimum: 1
+        maximum: 1000
+        default: 1000
 
     cid:
       description: return pin objects for the specified CID(s)
