@@ -228,12 +228,10 @@ components:
         cid:
           description: CID to be pinned
           type: string
-        depth:
-          description: Defines how deep the DAG should be pinned (-1 recursive, 0 direct)
-          type: integer
-          format: int32
-          default: -1
-          minimum: -1
+        recursive:
+          description: Defines if a DAG is pinned recursively, or only its root
+          type: boolean
+          default: true
         meta:
           $ref: '#/components/schemas/Meta'
 
