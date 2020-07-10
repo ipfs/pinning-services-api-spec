@@ -228,12 +228,14 @@ components:
         cid:
           description: CID to be pinned
           type: string
-        depth:
-          description: Defines how deep the DAG should be pinned (-1 recursive, 0 direct)
-          type: integer
-          format: int32
-          default: -1
-          minimum: -1
+        mode:
+          description: Defines the mode of pin operation
+          type: string
+          enum:
+            - direct
+            - recursive
+            - pinset
+          default: recursive
         meta:
           $ref: '#/components/schemas/Meta'
 
