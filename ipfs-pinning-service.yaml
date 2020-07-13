@@ -21,10 +21,8 @@ Your input and feedback are welcome and valuable as we develop this API spec. Pl
 
 The user creates a pin object via `POST /pins` and receives a `PinStatus` response&#x3a;
 
-<ul>
-<li>`id` in `PinStatus` is `cid-of-pin-object`, which can can be used for modifying and/or removing the pin in the future</li>
-<li>`status` in  `PinStatus` indicates the current state of a pin</li>
-</ul>
+- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for modifying and/or removing the pin in the future
+- `status` in  `PinStatus` indicates the current state of a pin
 
 ### Checking status of in-progress pinning
 
