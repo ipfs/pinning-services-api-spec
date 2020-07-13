@@ -257,7 +257,7 @@ components:
         - resolving  # pinning in-progress: verifying pin request and looking for providers
         - retrieving # pinning in-progress: connected to at least one provider and fetched at least one block
         - pinned     # pinned successfully
-        - failed     # pining service was unable to finish pinning operation, additional details can be foun in meta[fail_reason]
+        - failed     # pining service was unable to finish pinning operation, details can be found in meta[fail_reason]
         - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
         - unpinning  # (optional) unpinning in-progress
 
