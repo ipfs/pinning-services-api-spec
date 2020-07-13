@@ -9,7 +9,7 @@ info:
 <li>For use and implementation by pinning service providers</li>
 <li>For use in client mode by IPFS nodes and GUI-based applications</li>
 </ul>
-<h3>This spec is a work in progress! &#127959;</h3>
+<h2>This spec is a work in progress! &#127959;</h2>
 <p><strong>Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at <a href=\"https://github.com/ipfs/pinning-services-api-spec\" target=\"_blank\">github.com/ipfs/pinning-services-api-spec</a>.</strong></p>
 <h1>The pin object lifecycle</h1>
 <h2>Creating a new pin object</h2>
