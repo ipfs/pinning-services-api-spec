@@ -99,6 +99,9 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/Pin'
+              uniqueItems: true
+              minItems: 1
+              maxItems: 100
       responses:
         '202':
           description: Accepted
@@ -108,6 +111,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PinStatus'
+                uniqueItems: true
+                minItems: 1
+                maxItems: 100
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
