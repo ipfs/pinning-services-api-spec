@@ -45,6 +45,19 @@ response. The old pin object is deleted automatically.
 
 Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
 
+# Custom metadata
+
+Pinning Services are encouraged to add support for additional features by
+leveraging optional `meta` attributes:
+
+- `PinStatus.meta[progress]` –  % progress of ongoing pinning operation
+- `Pin.meta[replication]` – could define how many copies service should keep
+- `Pin.meta[depth]` – could define how deep the DAG should be pinned
+
+Those can be vendor-specific, but we encourrage community to leverage `meta` to
+come up with conventions that could become part of mandatory revisions of this
+API.
+
 # Authorization
 
 An opaque auth token is required to be sent with each request.
@@ -228,12 +241,6 @@ components:
         cid:
           description: CID to be pinned
           type: string
-        depth:
-          description: Defines how deep the DAG should be pinned (-1 recursive, 0 direct)
-          type: integer
-          format: int32
-          default: -1
-          minimum: -1
         meta:
           $ref: '#/components/schemas/Meta'
 
