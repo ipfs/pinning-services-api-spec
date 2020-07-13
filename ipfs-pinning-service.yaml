@@ -6,9 +6,10 @@ info:
 # About this API
 
 The IPFS Pinning Service API is intended to be an implementation-agnostic API: 
-
-- For use and implementation by pinning service providers 
-- For use in client mode by IPFS nodes and GUI-based applications
+<ul>
+<li>For use and implementation by pinning service providers</li>
+<li>For use in client mode by IPFS nodes and GUI-based applications</li>
+</ul>
 
 ### This spec is a work in progress! 🏗️
 
