@@ -56,8 +56,6 @@ leveraging optional `meta` attributes:
 
 - `Pin.meta[replication]` – could define how many copies service should keep
 
-- `Pin.meta[depth]` – could define how deep the DAG should be pinned
-
 - `Pin.meta[providers] = ['multiaddr1','multiaddr2']` list of peers that are known to have pinned data
 
 Those can be vendor-specific, but we encourrage community to leverage `meta` to
