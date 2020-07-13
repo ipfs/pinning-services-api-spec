@@ -99,9 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PinStatus'
+                $ref: '#/components/schemas/PinResults'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -121,15 +119,16 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/Pin'
+              uniqueItems: true
+              minItems: 1
+              maxItems: 1000
       responses:
         '202':
           description: Accepted
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PinStatus'
+                $ref: '#/components/schemas/PinResults'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -223,6 +222,27 @@ paths:
 components:
   schemas:
 
+    PinResults:
+      description: Response used for listing Pin objects matching request
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          description: The total number of pin objects that exist for passed query filters
+          type: integer
+          format: int32
+          minimum: 0
+        results:
+          description: An array of PinStatus results
+          type: array
+          items:
+            $ref: '#/components/schemas/PinStatus'
+          uniqueItems: true
+          minItems: 0
+          maxItems: 1000
+
     PinStatus:
       description: Pin object with Status
       type: object
@@ -315,6 +335,9 @@ components:
         type: array
         items:
           type: string
+        uniqueItems: true
+        minItems: 1
+        maxItems: 1000
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       examples:
@@ -334,6 +357,8 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Status'
+        uniqueItems: true
+        minItems: 1
       style: form # ?status=a,b,c
       explode: false
 
