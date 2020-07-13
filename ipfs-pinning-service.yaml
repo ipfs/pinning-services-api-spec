@@ -3,78 +3,74 @@ info:
   version: "0.0.2"
   title: '(WIP) IPFS Pinning Service API'
   description: "
-# About
+# About this API
 
-This is the IPFS Pinning Service API. It attempts to be an
-implementation-agnostic API designed to be implemented by Pinning Service
-Providers and used in client mode by IPFS nodes and GUI applications.
+The IPFS Pinning Service API is intended to be an implementation-agnostic API: 
 
-## THIS SPEC IS WORK IN PROGRESS 🏗️
+- For use and implementation by pinning service providers 
+- For use in client mode by IPFS nodes and GUI-based applications
 
-Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
+### This spec is a work in progress! 🏗️
 
-# Pin object lifecycle
+Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).
 
-## Creating a new pin
+# The pin object lifecycle
 
-User creates pin object via `POST /pins` and receives `PinStatus` response
+## Creating a new pin object
 
-- `id` in `PinStatus` is `cid-of-pin-object` that can be used for modifying
-  and removing pin in the future
+The user creates a pin object via `POST /pins` and receives a `PinStatus` response:
 
-- `status` in  `PinStatus` indicates current state of a pin
+- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for modifying
+  and/or removing the pin in the future
+
+- `status` in  `PinStatus` indicates the current state of a pin
 
 
-### Checking status of pinning in progress
+### Checking status of in-progress pinning
 
-`status` from `PinStatus` may indicate a pending state. It means the data
-behind `Pin.cid` was not found on pinning service and is being fetched from
-IPFS network, which may take time.
+`status` (in `PinStatus`) may indicate a pending state. This means the data
+behind `Pin.cid` was not found on the pinning service and is being fetched from the
+IPFS network at large, which may take time.
 
-In that case, user can periodically check pinning progress via `GET
-/pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove
-pending pin.
+In this case, the user can periodically check pinning progress via `GET
+/pins/{cid-of-pin-object}` until pinning is successful, or the user decides to remove
+the pending pin.
 
-## Modifying existing pin object
+## Modifying an existing pin object
 
-User may decide to modify existing pin object via `POST
-/pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus`
+The user can modify an existing pin object via `POST
+/pins/{cid-of-pin-object}`. The new pin object `id` is returned in the `PinStatus`
 response. The old pin object is deleted automatically.
 
 ## Removing a pin object
 
-Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
+A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
 
 # Custom metadata
 
-Pinning Services are encouraged to add support for additional features by
-leveraging optional `meta` attributes:
+Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes;  
+doing so should not impact the basic pinning functionality.  
 
-- `PinStatus.meta[progress]` –  % progress of ongoing pinning operation (if possible to tell)
+- `PinStatus.meta[progress]`: Progress (as percent value) of an ongoing pinning operation, if possible to tell
 
-- `PinStatus.meta[fail_reason]` - service-specific reason why pin operation failed (eg. lack of funds, DAG too big etc)
+- `PinStatus.meta[fail_reason]`: A service-specific reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
-- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']` list of peers to connect to to speed up transfer of pinned data
+- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']`: A list of peers to which the user can connect in order to speed up transfer of pinned data
 
-- `Pin.meta[replication]` – could define how many copies service should keep
+- `Pin.meta[replication]`: This attribute could define how many copies a pinning service should keep
 
-- `Pin.meta[providers] = ['multiaddr1','multiaddr2']` list of peers that are known to have pinned data
+- `Pin.meta[providers] = ['multiaddr1','multiaddr2']`: A list of peers that are known to have pinned data
 
-Those can be vendor-specific, but we encourage community to leverage `meta` to
-come up with conventions that could become part of future revisions of this
-API. 
 
-It is ok to ommit or ignore `meta` attributes.  
-Doing so should not impact the basic pinning functionality.  
+While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API. 
 
 # Authorization
 
-An opaque auth token is required to be sent with each request.
-There are two ways of doing so:
+An opaque authorization token is required to be sent with each request. There are two ways of doing so:
 
-- HTTP header: `Authorization: Bearer <auth>`
+1. Using an HTTP header: `Authorization: Bearer <auth>`
 
-- query parameter: `&auth=<auth>`
+2. Using a query parameter: `&auth=<auth>`
 "
 
 servers:
@@ -84,7 +80,7 @@ paths:
   /pins:
     get:
       summary: List pin objects
-      description: List all the pin objects and status matching optional parameters
+      description: List all the pin objects and their status, matching optional parameters.
       tags:
         - pins
       parameters:
@@ -108,7 +104,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       summary: Add an array of pin objects
-      description: Add an array of pin objects for the current user
+      description: Add an array of pin objects for the current user.
       tags:
         - pins
       parameters:
@@ -151,7 +147,7 @@ paths:
       - $ref: '#/components/parameters/auth'
     get:
       summary: Get pin object
-      description: Get pin object with status
+      description: Get a pin object and its status.
       tags:
         - pins
       parameters:
@@ -171,7 +167,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       summary: Modify pin object
-      description: Modifies existing pin object
+      description: Modify an existing pin object.
       tags:
         - pins
       parameters:
@@ -203,7 +199,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Remove pin object
-      description: Remove pin object
+      description: Remove a pin object.
       tags:
         - pins
       parameters:
@@ -224,7 +220,7 @@ components:
   schemas:
 
     PinStatus:
-      description: Pin object with Status
+      description: pin object with status
       type: object
       required:
         - id
@@ -232,7 +228,7 @@ components:
         - pin
       properties:
         id:
-          description: CID of Pin object that can be used for status checks of ongoing pinning
+          description: CID of pin object; can be used to check status of ongoing pinning
           type: string
         status:
           $ref: '#/components/schemas/Status'
@@ -242,7 +238,7 @@ components:
           $ref: '#/components/schemas/Meta'
 
     Pin:
-      description: Pin object
+      description: pin object
       type: object
       required:
         - cid
@@ -254,24 +250,24 @@ components:
           $ref: '#/components/schemas/Meta'
 
     Status:
-      description: Status in which pin object can exist at a pinning service
+      description: status a pin object can have at a pinning service
       type: string
       enum:
-        - resolving  # pinning in-progress: verifying pin request and looking for providers
-        - retrieving # pinning in-progress: connected to at least one provider and fetched at least one block
+        - resolving  # pinning in progress: verifying pin request and looking for providers
+        - retrieving # pinning in progress: connected to at least one provider and fetched at least one block
         - pinned     # pinned successfully
-        - failed     # pining service was unable to finish pinning operation, details can be found in meta[fail_reason]
-        - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
-        - unpinning  # (optional) unpinning in-progress
+        - failed     # pining service was unable to finish pinning operation; details can be found in meta[fail_reason]
+        - expired    # (optional) still pinned for some time, but ran out of funds and won't be provided to the IPFS network
+        - unpinning  # (optional) unpinning in progress
 
     Meta:
-      description: Optional metadata
+      description: optional metadata
       type: object
       additionalProperties:
         type: string
 
     Error:
-      description: Base Error object
+      description: base error object
       type: object
       required:
         - code
@@ -319,14 +315,14 @@ components:
       explode: false
       examples:
         oneId:
-          summary: Example of a single CID
+          summary: example of a single CID
           value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR]   # ?cid=Qm
         multipleIds:
-          summary: Example of multiple CIDs
+          summary: example of multiple CIDs
           value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
 
     status:
-      description: return pin objects for pins in the specified status
+      description: return pin objects for pins with the specified status
       name: status
       in: query
       required: false
@@ -347,7 +343,7 @@ components:
 
   responses:
     BadRequest:
-      description: Bad Request (400)
+      description: Bad request (400)
       content:
         application/json:
           schema:
@@ -368,14 +364,14 @@ components:
             $ref: '#/components/schemas/Error'
 
     InsufficientFunds:
-      description: Insufficient Funds (409)
+      description: Insufficient funds (409)
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
 
     InternalServerError:
-      description: Internal Server Error (500)
+      description: Internal server error (500)
       content:
         application/json:
           schema:
