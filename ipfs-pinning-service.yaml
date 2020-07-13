@@ -253,7 +253,7 @@ components:
         pin:
           $ref: '#/components/schemas/Pin'
         providers:
-          $ref: '#/components/schemas/Providers'
+          $ref: '#/components/schemas/ServiceProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -262,13 +262,12 @@ components:
       type: object
       required:
         - cid
-        - providers
       properties:
         cid:
           description: CID to be pinned recursively
           type: string
         providers:
-          $ref: '#/components/schemas/Providers'
+          $ref: '#/components/schemas/DataProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -283,14 +282,23 @@ components:
         - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
         - unpinning  # (optional) unpinning in-progress
 
-    Providers:
-      description: List of multiaddrs designated or known to provide the pinned data.
+    ServiceProviders:
+      description: list of multiaddrs designated by pinning service for transferring any new data from external peers
+      type: array
+      items:
+        type: string
+      uniqueItems: true
+      minItems: 1
+      maxItems: 20
+
+    DataProviders:
+      description: optional list of multiaddrs known to provide the data
       type: array
       items:
         type: string
       uniqueItems: true
       minItems: 0
-      maxItems: 1000
+      maxItems: 20
 
     Meta:
       description: Optional metadata
