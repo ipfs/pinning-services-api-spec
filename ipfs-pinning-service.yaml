@@ -61,8 +61,11 @@ leveraging optional `meta` attributes:
 - `Pin.meta[providers] = ['multiaddr1','multiaddr2']` list of peers that are known to have pinned data
 
 Those can be vendor-specific, but we encourage community to leverage `meta` to
-come up with conventions that could become part of mandatory revisions of this
-API.
+come up with conventions that could become part of future revisions of this
+API. 
+
+It is ok to ommit or ignore `meta` attributes.  
+Doing so should not impact the basic pinning functionality.  
 
 # Authorization
 
