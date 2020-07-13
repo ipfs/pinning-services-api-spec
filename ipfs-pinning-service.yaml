@@ -299,6 +299,9 @@ components:
         type: array
         items:
           type: string
+        uniqueItems: true
+        minItems: 1
+        maxItems: 100
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       examples:
@@ -318,6 +321,8 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Status'
+        uniqueItems: true
+        minItems: 1
       style: form # ?status=a,b,c
       explode: false
 
