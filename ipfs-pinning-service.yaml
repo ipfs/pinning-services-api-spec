@@ -45,6 +45,23 @@ response. The old pin object is deleted automatically.
 
 Pin object can be removed via `DELETE /pins/{cid-of-pin-object}`
 
+
+# Provider hints
+
+Pinning of new data can be accelerated by providing a list of known data
+sources in `Pin.providers` and connecting at least one of them to pinning
+service nodes at `PinStatus.providers`.
+
+
+The most common scenario is a client putting own IPFS node's multiaddrs in
+`Pin.providers`  and then directly connecting to every multiaddr returned by
+Pinning Service in `PinStatus.providers` to initiate transfer.
+
+
+This ensures data transfer starts immediately (without waiting for provider
+discovery over DHT) and direct dial from a client works around peer routing
+issues in restrictive network topologies such as NAT.
+
 # Custom metadata
 
 Pinning Services are encouraged to add support for additional features by
@@ -54,11 +71,7 @@ leveraging optional `meta` attributes:
 
 - `PinStatus.meta[fail_reason]` - service-specific reason why pin operation failed (eg. lack of funds, DAG too big etc)
 
-- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']` list of peers to connect to to speed up transfer of pinned data
-
 - `Pin.meta[replication]` – could define how many copies service should keep
-
-- `Pin.meta[providers] = ['multiaddr1','multiaddr2']` list of peers that are known to have pinned data
 
 Those can be vendor-specific, but we encourage community to leverage `meta` to
 come up with conventions that could become part of future revisions of this
@@ -250,6 +263,7 @@ components:
         - id
         - status
         - pin
+        - providers
       properties:
         id:
           description: CID of Pin object that can be used for status checks of ongoing pinning
@@ -258,6 +272,8 @@ components:
           $ref: '#/components/schemas/Status'
         pin:
           $ref: '#/components/schemas/Pin'
+        providers:
+          $ref: '#/components/schemas/ServiceProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -268,8 +284,10 @@ components:
         - cid
       properties:
         cid:
-          description: CID to be pinned
+          description: CID to be pinned recursively
           type: string
+        providers:
+          $ref: '#/components/schemas/DataProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -283,6 +301,24 @@ components:
         - failed     # pining service was unable to finish pinning operation, details can be found in meta[fail_reason]
         - expired    # (optional) still pinned for some time, but run out of funds and won't be provided to the IPFS network
         - unpinning  # (optional) unpinning in-progress
+
+    ServiceProviders:
+      description: list of multiaddrs designated by pinning service for transferring any new data from external peers
+      type: array
+      items:
+        type: string
+      uniqueItems: true
+      minItems: 1
+      maxItems: 20
+
+    DataProviders:
+      description: optional list of multiaddrs known to provide the data
+      type: array
+      items:
+        type: string
+      uniqueItems: true
+      minItems: 0
+      maxItems: 20
 
     Meta:
       description: Optional metadata
