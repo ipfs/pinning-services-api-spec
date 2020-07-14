@@ -44,6 +44,7 @@ In this case, the user can periodically check pinning progress via `GET /pins/{c
 The user can modify an existing pin object via `POST /pins/{cid-of-pin-object}`. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
+
 ## Removing a pin object
 
 A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
@@ -66,6 +67,7 @@ This ensures data transfer starts immediately (without waiting for provider
 discovery over DHT) and direct dial from a client works around peer routing
 issues in restrictive network topologies such as NAT.
 
+
 # Custom metadata
 
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
@@ -81,6 +83,7 @@ Pinning services are encouraged to add support for additional features by levera
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
 
 
+
 # Authorization
 
 An opaque authorization token is required to be sent with each request. There are two ways of doing so:
@@ -88,6 +91,9 @@ An opaque authorization token is required to be sent with each request. There ar
 1. Using an HTTP header: `Authorization: Bearer <auth>`
 
 2. Using a query parameter: `&auth=<auth>`
+
+
+The `auth` token should be generated per device, and user should have ability to revoke each token separately.
 
 "
 
@@ -98,7 +104,7 @@ paths:
   /pins:
     get:
       summary: List pin objects
-      description: List all the pin objects and their status, matching optional parameters.
+      description: List all the pin objects, matching optional filters. When no filter is provided, only successfull pins are returned.
       tags:
         - pins
       parameters:
@@ -296,9 +302,9 @@ components:
       description: status a pin object can have at a pinning service
       type: string
       enum:
-        - resolving  # pinning in progress: verifying pin request and looking for providers
-        - retrieving # pinning in progress: connected to at least one provider and fetched at least one block
+        - pinning    # pinning in progress, optional details can be returned in meta[pinning_status]
         - pinned     # pinned successfully
+        - failed     # pining service was unable to finish pinning operation, optional details can be found in meta[fail_reason]
         - unpinned   # data is no longer pinned
 
     ServiceProviders:
@@ -389,13 +395,7 @@ components:
       in: query
       required: false
       schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Status'
-        uniqueItems: true
-        minItems: 1
-      style: form # ?status=a,b,c
-      explode: false
+        $ref: '#/components/schemas/Status'
 
     auth:
       description: optional auth token (alternative to Authorization header)
