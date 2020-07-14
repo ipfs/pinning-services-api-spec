@@ -49,6 +49,23 @@ The user can modify an existing pin object via `POST /pins/{cid-of-pin-object}`.
 A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
 
 
+
+# Provider hints
+
+Pinning of new data can be accelerated by providing a list of known data
+sources in `Pin.providers` and connecting at least one of them to pinning
+service nodes at `PinStatus.providers`.
+
+
+The most common scenario is a client putting own IPFS node's multiaddrs in
+`Pin.providers`  and then directly connecting to every multiaddr returned by
+Pinning Service in `PinStatus.providers` to initiate transfer.
+
+
+This ensures data transfer starts immediately (without waiting for provider
+discovery over DHT) and direct dial from a client works around peer routing
+issues in restrictive network topologies such as NAT.
+
 # Custom metadata
 
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
@@ -57,11 +74,8 @@ Pinning services are encouraged to add support for additional features by levera
 
 - `PinStatus.meta[fail_reason]`: A service-specific reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
-- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']`: A list of peers to which the user can connect in order to speed up transfer of pinned data
-
 - `Pin.meta[replication]`: This attribute could define how many copies a pinning service should keep
 
-- `Pin.meta[providers] = ['multiaddr1','multiaddr2']`: A list of peers that are known to have pinned data
 
 
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
@@ -99,9 +113,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PinStatus'
+                $ref: '#/components/schemas/PinResults'
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -121,15 +133,16 @@ paths:
               type: array
               items:
                 $ref: '#/components/schemas/Pin'
+              uniqueItems: true
+              minItems: 1
+              maxItems: 1000
       responses:
         '202':
           description: Accepted
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/PinStatus'
+                $ref: '#/components/schemas/PinResults'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -223,6 +236,27 @@ paths:
 components:
   schemas:
 
+    PinResults:
+      description: Response used for listing Pin objects matching request
+      type: object
+      required:
+        - count
+        - results
+      properties:
+        count:
+          description: The total number of pin objects that exist for passed query filters
+          type: integer
+          format: int32
+          minimum: 0
+        results:
+          description: An array of PinStatus results
+          type: array
+          items:
+            $ref: '#/components/schemas/PinStatus'
+          uniqueItems: true
+          minItems: 0
+          maxItems: 1000
+
     PinStatus:
       description: pin object with status
       type: object
@@ -230,6 +264,7 @@ components:
         - id
         - status
         - pin
+        - providers
       properties:
         id:
           description: CID of pin object; can be used to check status of ongoing pinning
@@ -238,6 +273,8 @@ components:
           $ref: '#/components/schemas/Status'
         pin:
           $ref: '#/components/schemas/Pin'
+        providers:
+          $ref: '#/components/schemas/ServiceProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -248,8 +285,10 @@ components:
         - cid
       properties:
         cid:
-          description: CID to be pinned
+          description: CID to be pinned recursively
           type: string
+        providers:
+          $ref: '#/components/schemas/DataProviders'
         meta:
           $ref: '#/components/schemas/Meta'
 
@@ -260,9 +299,25 @@ components:
         - resolving  # pinning in progress: verifying pin request and looking for providers
         - retrieving # pinning in progress: connected to at least one provider and fetched at least one block
         - pinned     # pinned successfully
-        - failed     # pining service was unable to finish pinning operation; details can be found in meta[fail_reason]
-        - expired    # (optional) still pinned for some time, but ran out of funds and won't be provided to the IPFS network
-        - unpinning  # (optional) unpinning in progress
+        - unpinned   # data is no longer pinned
+
+    ServiceProviders:
+      description: list of multiaddrs designated by pinning service for transferring any new data from external peers
+      type: array
+      items:
+        type: string
+      uniqueItems: true
+      minItems: 1
+      maxItems: 20
+
+    DataProviders:
+      description: optional list of multiaddrs known to provide the data
+      type: array
+      items:
+        type: string
+      uniqueItems: true
+      minItems: 0
+      maxItems: 20
 
     Meta:
       description: optional metadata
@@ -315,6 +370,9 @@ components:
         type: array
         items:
           type: string
+        uniqueItems: true
+        minItems: 1
+        maxItems: 1000
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       examples:
@@ -334,6 +392,8 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Status'
+        uniqueItems: true
+        minItems: 1
       style: form # ?status=a,b,c
       explode: false
 
