@@ -13,6 +13,7 @@ Providers and used in client mode by IPFS nodes and GUI applications.
 
 Join design discussion at  [https://github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec)
 
+
 # Pin object lifecycle
 
 ## Creating a new pin
@@ -35,11 +36,13 @@ In that case, user can periodically check pinning progress via `GET
 /pins/{cid-of-pin-object}`, until pinning is successful, or decides to remove
 pending pin.
 
+
 ## Modifying existing pin object
 
 User may decide to modify existing pin object via `POST
 /pins/{cid-of-pin-object}`. The new pin object `id` is returned in `PinStatus`
 response. The old pin object is deleted automatically.
+
 
 ## Removing a pin object
 
@@ -62,6 +65,7 @@ This ensures data transfer starts immediately (without waiting for provider
 discovery over DHT) and direct dial from a client works around peer routing
 issues in restrictive network topologies such as NAT.
 
+
 # Custom metadata
 
 Pinning Services are encouraged to add support for additional features by
@@ -80,6 +84,7 @@ API.
 It is ok to ommit or ignore `meta` attributes.  
 Doing so should not impact the basic pinning functionality.  
 
+
 # Authorization
 
 An opaque auth token is required to be sent with each request.
@@ -97,7 +102,7 @@ paths:
   /pins:
     get:
       summary: List pin objects
-      description: List all the pin objects and status matching optional parameters
+      description: List all the pin objects matching optional parameters. When no filter is provided, only successfull pins are returned.
       tags:
         - pins
       parameters:
@@ -295,10 +300,9 @@ components:
       description: Status in which pin object can exist at a pinning service
       type: string
       enum:
-        - resolving  # pinning in-progress: verifying pin request and looking for providers
-        - retrieving # pinning in-progress: connected to at least one provider and fetched at least one block
+        - pinning    # pinning in progress, optional details can be returned in meta[pinning_status]
         - pinned     # pinned successfully
-        - failed     # pining service was unable to finish pinning operation, details can be found in meta[fail_reason]   
+        - failed     # pining service was unable to finish pinning operation, details can be found in meta[fail_reason]
         - unpinned   # data is no longer pinned
 
     ServiceProviders:
@@ -389,13 +393,7 @@ components:
       in: query
       required: false
       schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Status'
-        uniqueItems: true
-        minItems: 1
-      style: form # ?status=a,b,c
-      explode: false
+        $ref: '#/components/schemas/Status'
 
     auth:
       description: optional auth token (alternative to Authorization header)
