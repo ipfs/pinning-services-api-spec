@@ -16,7 +16,7 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 
 ## This spec is a work in progress! 🏗️
 
-**Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [https://github.com/ipfs/pinning-services-api-spec](github.com/ipfs/pinning-services-api-spec).**
+**Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
 
 
 # The pin object lifecycle
@@ -24,7 +24,7 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 
 ## Creating a new pin object
 
-The user creates a pin object via <code>POST /pins</code> and receives a <code>PinStatus</code> response&#x3a;
+The user creates a pin object via `POST /pins` and receives a `PinStatus` response:
 
 - `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for modifying and/or removing the pin in the future
 
@@ -34,6 +34,7 @@ The user creates a pin object via <code>POST /pins</code> and receives a <code>P
 ### Checking status of in-progress pinning
 
 `status` (in `PinStatus`) may indicate a pending state. This means the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
+
 
 In this case, the user can periodically check pinning progress via `GET /pins/{cid-of-pin-object}` until pinning is successful, or the user decides to remove the pending pin.
 
@@ -52,26 +53,27 @@ A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
 
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
 
-- `PinStatus.meta[progress]`&#x3a; Progress (as percent value) of an ongoing pinning operation, if possible to tell
+- `PinStatus.meta[progress]`: Progress (as percent value) of an ongoing pinning operation, if possible to tell
 
-- `PinStatus.meta[fail_reason]`&#x3a; A service-specific reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
+- `PinStatus.meta[fail_reason]`: A service-specific reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
-- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']`&#x3a; A list of peers to which the user can connect in order to speed up transfer of pinned data
+- `PinStatus.meta[receivers] = ['multiaddr1','multiaddr2']`: A list of peers to which the user can connect in order to speed up transfer of pinned data
 
-- `Pin.meta[replication]`&#x3a; This attribute could define how many copies a pinning service should keep
+- `Pin.meta[replication]`: This attribute could define how many copies a pinning service should keep
 
-- `Pin.meta[providers] = ['multiaddr1','multiaddr2']`&#x3a; A list of peers that are known to have pinned data
+- `Pin.meta[providers] = ['multiaddr1','multiaddr2']`: A list of peers that are known to have pinned data
+
 
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
 
 
 # Authorization
 
-An opaque authorization token is required to be sent with each request. There are two ways of doing so&#x3a;
+An opaque authorization token is required to be sent with each request. There are two ways of doing so:
 
-1. Using an HTTP header&#x3a; `Authorization&#x3a; Bearer <auth>`
+1. Using an HTTP header: `Authorization: Bearer <auth>`
 
-2. Using a query parameter&#x3a; `&auth=<auth>`
+2. Using a query parameter: `&auth=<auth>`
 
 "
 
