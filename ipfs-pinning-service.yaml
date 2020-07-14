@@ -10,6 +10,7 @@ info:
 The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x3a;
 
 - For use and implementation by pinning service providers
+
 - For use in client mode by IPFS nodes and GUI-based applications
 
 
