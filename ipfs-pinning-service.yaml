@@ -5,7 +5,7 @@ info:
   description: "
   
   
-# Overview
+# Goal
 
 The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x3a;
 
@@ -16,7 +16,9 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 
 ## This spec is a work in progress! 🏗️
 
-**Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
+**Your input and feedback are welcome and valuable as we develop this API spec.  
+
+Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
 
 
 # The pin object lifecycle
