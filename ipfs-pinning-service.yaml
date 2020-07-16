@@ -75,7 +75,7 @@ issues in restrictive network topologies such as NAT.
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
 
 
-- `Pin.meta[app_id]`: Attaching unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
+- `Pin.meta[app_id]`: Attaching a unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
 
 - `PinStatus.meta[status_details]`: Service-specific details. For example, when `PinStatus.status=failed` it could provide a reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
