@@ -332,7 +332,7 @@ components:
       
 
     PinMeta:
-      description: optional metadata for Pin object
+      description: optional metadata for pin object
       type: object
       additionalProperties:
         type: string
