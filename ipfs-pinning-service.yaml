@@ -77,7 +77,7 @@ Pinning services are encouraged to add support for additional features by levera
 
 - `Pin.meta[app_id]`: Attaching unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
 
-- `PinStatus.meta[status_details]`: A service-specific details. For example, when `PinStatus.status=failed` it could provide a reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
+- `PinStatus.meta[status_details]`: Service-specific details. For example, when `PinStatus.status=failed` it could provide a reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
 
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
