@@ -304,9 +304,10 @@ components:
       description: status a pin object can have at a pinning service
       type: string
       enum:
-        - pinning    # pinning in progress, optional details can be returned in meta[pinning_status]
+        - queued     # pinning operation is waiting in the queue, additional info can be returned in meta[status_details]      
+        - pinning    # pinning in progress, additional info can be returned in meta[status_details]
         - pinned     # pinned successfully
-        - failed     # pining service was unable to finish pinning operation, optional details can be found in meta[fail_reason]
+        - failed     # pining service was unable to finish pinning operation, additional info can be found in meta[status_details]
 
     ServiceProviders:
       description: list of multiaddrs designated by pinning service for transferring any new data from external peers
@@ -396,7 +397,13 @@ components:
       in: query
       required: false
       schema:
-        $ref: '#/components/schemas/Status'
+        type: array
+        items:
+          $ref: '#/components/schemas/Status'
+        uniqueItems: true
+        minItems: 1
+      style: form # ?status=queued,pinning
+      explode: false
 
     auth:
       description: optional auth token (alternative to Authorization header)
