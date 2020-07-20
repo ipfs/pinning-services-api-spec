@@ -74,12 +74,10 @@ issues in restrictive network topologies such as NAT.
 
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
 
-- `PinStatus.meta[progress]`: Progress (as percent value) of an ongoing pinning operation, if possible to tell
 
-- `PinStatus.meta[fail_reason]`: A service-specific reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
+- `Pin.meta[app_id]`: Attaching a unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
 
-- `Pin.meta[replication]`: This attribute could define how many copies a pinning service should keep
-
+- `PinStatus.meta[status_details]`: Service-specific details. For example, when `PinStatus.status=failed` it could provide a reason why a pin operation failed (e.g. lack of funds, DAG too big, etc.)
 
 
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
@@ -114,6 +112,7 @@ paths:
         - $ref: '#/components/parameters/status'
         - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/meta'
         - $ref: '#/components/parameters/auth'
       responses:
         '200':
@@ -277,6 +276,7 @@ components:
         id:
           description: CID of pin object; can be used to check status of ongoing pinning
           type: string
+          example: "QmPinObject"
         status:
           $ref: '#/components/schemas/Status'
         pin:
@@ -284,7 +284,7 @@ components:
         providers:
           $ref: '#/components/schemas/ServiceProviders'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/StatusMeta'
 
     Pin:
       description: pin object
@@ -295,10 +295,11 @@ components:
         cid:
           description: CID to be pinned recursively
           type: string
+          example: "QmCIDToBePinned"
         providers:
           $ref: '#/components/schemas/DataProviders'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/PinMeta'
 
     Status:
       description: status a pin object can have at a pinning service
@@ -317,6 +318,7 @@ components:
       uniqueItems: true
       minItems: 1
       maxItems: 20
+      example: ['/dnsaddr/pin-service.example.com']
 
     DataProviders:
       description: optional list of multiaddrs known to provide the data
@@ -326,12 +328,30 @@ components:
       uniqueItems: true
       minItems: 0
       maxItems: 20
+      example: ['/p2p/QmSourcePeerId']
+      
 
-    Meta:
-      description: optional metadata
+    PinMeta:
+      description: optional metadata for pin object
       type: object
       additionalProperties:
         type: string
+        minProperties: 0
+        maxProperties: 1000        
+      example:
+        app_id: "99986338-1113-4706-8302-4420da6158aa" # Pin.meta[app_id], useful for filtering pins per app
+      
+    StatusMeta:
+      description: optional metadata for PinStatus response
+      type: object
+      additionalProperties:
+        type: string
+        minProperties: 0
+        maxProperties: 1000        
+      example:
+        status_details: "Fetching new data: 50% complete" # PinStatus.meta[status_details], when status=pinning
+            
+      
 
     Error:
       description: base error object
@@ -404,6 +424,16 @@ components:
         minItems: 1
       style: form # ?status=queued,pinning
       explode: false
+
+    meta:
+      description: return pin objects that match specified metadata
+      name: meta
+      in: query
+      required: false
+      content:
+        application/json: # ?meta={"foo":"bar"}
+          schema:
+            $ref: '#/components/schemas/PinMeta'
 
     auth:
       description: optional auth token (alternative to Authorization header)
