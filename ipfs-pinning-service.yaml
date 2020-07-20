@@ -308,7 +308,6 @@ components:
         - pinning    # pinning in progress, additional info can be returned in meta[status_details]
         - pinned     # pinned successfully
         - failed     # pining service was unable to finish pinning operation, additional info can be found in meta[status_details]
-        - unpinned   # data is no longer pinned
 
     ServiceProviders:
       description: list of multiaddrs designated by pinning service for transferring any new data from external peers
