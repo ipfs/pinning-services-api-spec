@@ -3,7 +3,7 @@
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai)
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](https://ipfs.io/)
 [![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=master)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amaster)
-![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+[![](https://img.shields.io/badge/status-draft-yellow.svg?style=flat-square)](https://github.com/ipfs/specs/#understanding-the-meaning-of-the-spec-badges-and-their-lifecycle)
 
 > This repository contains the specs for the vendor-agnostic pinning service API for the IPFS ecosystem
 
@@ -19,10 +19,20 @@ A Pinning Service is a service that accepts [CIDs](https://github.com/ipld/cid/)
 The rationale behind defining a generic pinning service API is to have a baseline functionality and interface that can be provided by these services so that tools can be built on top of a common base of functionality.
 
 
-## Specification
+## Specification 
 
-* [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml) [![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=master)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amaster) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) 
-* [Human-readable API docs](https://ipfs.github.io/pinning-services-api-spec/) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+API is defined as OpenAPI spec in YAML format:
+
+* **[ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml)**
+
+
+### Documentation
+
+API documentation generated from the YAML file can be found at:
+
+- **[https://ipfs.github.io/pinning-services-api-spec](https://ipfs.github.io/pinning-services-api-spec/)**
+
+Alternative views: [redocly](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/ipfs/pinning-services-api-spec/master/ipfs-pinning-service.yaml)
 
 ## Timeline
 
@@ -35,6 +45,7 @@ The rationale behind defining a generic pinning service API is to have a baselin
     - [Epic: Pinning service integration · Issue #91 · ipfs/ipfs-gui](https://github.com/ipfs/ipfs-gui/issues/91)
     - [Analysis of Remote Pinning Services vs the needs of IPFS WebUI](https://docs.google.com/document/d/1f0R7woLtW_YTv9P9IOrUNK6QafgctJ7qTggEUdepD_c/)
   - [ipfs/pinning-services-api-specs](https://github.com/ipfs/pinning-services-api-specs) is created as a place for stakeholders to collaborate and finalize the API
+    - 2020-07-14: spec in draft status is ready for implementation
 
 
 ## Contribute
