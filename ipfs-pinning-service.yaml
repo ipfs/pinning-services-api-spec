@@ -47,7 +47,7 @@ The `PinStatus` object is a representation of a pinning operation.
 It includes the original `pin` object, along with current `status` and `id`, which which can be used for status checks and management.
 
 
-## Pin lifecycle
+## The pin lifecycle
 
 
 ### Creating a new pin object
