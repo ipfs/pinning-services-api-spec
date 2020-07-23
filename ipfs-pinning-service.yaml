@@ -30,7 +30,7 @@ This section describes the most important object types and conventions.
 
 A full list of fields and schemas can be found in the `schemas` section of the YAML file.
 
-## Pin and its status
+## Pin objects and pin status objects
 
 ### Pin object
 
