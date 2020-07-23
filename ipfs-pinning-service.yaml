@@ -34,7 +34,7 @@ A full list of fields and schemas can be found in the `schemas` section of the Y
 
 ### Pin object
 
-`Pin` object is a representation of a pin request.
+The `Pin` object is a representation of a pin request.
 
 
 It includes `cid` of data to be pinned and optional metadata in `providers` and `meta`.
