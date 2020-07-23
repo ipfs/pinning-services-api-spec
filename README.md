@@ -32,8 +32,6 @@ API documentation generated from the YAML file can be found at:
 
 - **[https://ipfs.github.io/pinning-services-api-spec](https://ipfs.github.io/pinning-services-api-spec/)**
 
-Alternative views: [redocly](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/ipfs/pinning-services-api-spec/master/ipfs-pinning-service.yaml)
-
 ## Timeline
 
 - 2019 Q2 

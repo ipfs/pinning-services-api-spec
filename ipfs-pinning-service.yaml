@@ -1,11 +1,13 @@
 openapi: 3.0.0
 info:
   version: "0.0.3"
-  title: '(WIP) IPFS Pinning Service API'
+  title: 'IPFS Pinning Service API'
+  x-logo:
+    url: "https://bafybeidehxarrk54mkgyl5yxbgjzqilp6tkaz2or36jhq24n3rdtuven54.ipfs.dweb.link/?filename=ipfs-pinning-service.svg"
   description: "
   
   
-# Goal
+## About this spec
 
 The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x3a;
 
@@ -14,46 +16,69 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 - For use in client mode by IPFS nodes and GUI-based applications
 
 
-## This spec is a work in progress! 🏗️
+> **Note**: while ready for implementation, this spec is still a work in progress! 🏗️
 
-**Your input and feedback are welcome and valuable as we develop this API spec.  
+> **Your input and feedback are welcome and valuable as we develop this API spec.
 
-Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
-
-
-# The pin object lifecycle
+> Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
 
 
-## Creating a new pin object
+# Schemas
 
-The user creates a pin object via `POST /pins` and receives a `PinStatus` response:
+This section describes the most important object types and conventions.
 
-- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for modifying and/or removing the pin in the future
+
+Full list of fields and schemas can be found in `schemas` section of the YAML file.
+
+## Pin and its status
+
+### Pin object
+
+`Pin` object is a representation of a pin request.
+
+
+It includes `cid` of data to be pinned and optional metadata in `providers` and `meta`.
+
+
+### Pin status object
+
+`PinStatus` object is a representation of a pinning operation.
+
+It includes original `pin` object along with current `status` and `id` which which can be used for status checks and management.
+
+
+## Pin lifecycle
+
+
+### Creating a new pin object
+
+The user sends one or more `Pin` objects via `POST /pins` and receives `PinStatus` response for each:
+
+- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for checking status, modifying and/or removing the pin in the future
 
 - `status` in `PinStatus` indicates the current state of a pin
 
 
 ### Checking status of in-progress pinning
 
-`status` (in `PinStatus`) may indicate a pending state. This means the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
+`status` (in `PinStatus`) may indicate a pending state (`queued` or `pinning`). This means the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
 
 
 In this case, the user can periodically check pinning progress via `GET /pins/{cid-of-pin-object}` until pinning is successful, or the user decides to remove the pending pin.
 
 
-## Modifying an existing pin object
+### Modifying an existing pin object
 
 The user can modify an existing pin object via `POST /pins/{cid-of-pin-object}`. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
-
-## Removing a pin object
+### Removing a pin object
 
 A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
 
 
 
-# Provider hints
+## Provider hints
 
 Pinning of new data can be accelerated by providing a list of known data
 sources in `Pin.providers` and connecting at least one of them to pinning
@@ -70,7 +95,7 @@ discovery over DHT) and direct dial from a client works around peer routing
 issues in restrictive network topologies such as NAT.
 
 
-# Custom metadata
+## Custom metadata
 
 Pinning services are encouraged to add support for additional features by leveraging the following optional `meta` attributes. Note that it is OK to ommit or ignore `meta` attributes; doing so should not impact the basic pinning functionality.
 
@@ -84,7 +109,7 @@ While these attributes can be vendor-specific, we encourage the community at lar
 
 
 
-# Authorization
+## Authorization
 
 An opaque authorization token is required to be sent with each request. There are two ways of doing so:
 
@@ -98,7 +123,7 @@ The `auth` token should be generated per device, and user should have ability to
 "
 
 servers:
-  - url: https://api.example.com
+  - url: https://pinning-service.example.com
 
 paths:
   /pins:
