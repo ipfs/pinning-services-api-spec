@@ -54,7 +54,7 @@ It includes the original `pin` object, along with current `status` and `id`, whi
 
 The user sends one or more `Pin` objects via `POST /pins` and receives `PinStatus` response for each:
 
-- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for checking status, modifying and/or removing the pin in the future
+- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for checking status, modifying the pin, and/or removing the pin in the future
 
 - `status` in `PinStatus` indicates the current state of a pin
 
