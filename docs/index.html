@@ -7,6 +7,172 @@
   <link rel="shortcut icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlo89/56ZQ/8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACUjDu1lo89/6mhTP+zrVP/nplD/5+aRK8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHNiIS6Wjz3/ubFY/761W/+vp1D/urRZ/8vDZf/GvmH/nplD/1BNIm8AAAAAAAAAAAAAAAAAAAAAAAAAAJaPPf+knEj/vrVb/761W/++tVv/r6dQ/7q0Wf/Lw2X/y8Nl/8vDZf+tpk7/nplD/wAAAAAAAAAAAAAAAJaPPf+2rVX/vrVb/761W/++tVv/vrVb/6+nUP+6tFn/y8Nl/8vDZf/Lw2X/y8Nl/8G6Xv+emUP/AAAAAAAAAACWjz3/vrVb/761W/++tVv/vrVb/761W/+vp1D/urRZ/8vDZf/Lw2X/y8Nl/8vDZf/Lw2X/nplD/wAAAAAAAAAAlo89/761W/++tVv/vrVb/761W/++tVv/r6dQ/7q0Wf/Lw2X/y8Nl/8vDZf/Lw2X/y8Nl/56ZQ/8AAAAAAAAAAJaPPf++tVv/vrVb/761W/++tVv/vbRa/5aPPf+emUP/y8Nl/8vDZf/Lw2X/y8Nl/8vDZf+emUP/AAAAAAAAAACWjz3/vrVb/761W/++tVv/vrVb/5qTQP+inkb/op5G/6KdRv/Lw2X/y8Nl/8vDZf/Lw2X/nplD/wAAAAAAAAAAlo89/761W/++tVv/sqlS/56ZQ//LxWb/0Mlp/9DJaf/Kw2X/oJtE/7+3XP/Lw2X/y8Nl/56ZQ/8AAAAAAAAAAJaPPf+9tFr/mJE+/7GsUv/Rymr/0cpq/9HKav/Rymr/0cpq/9HKav+xrFL/nplD/8vDZf+emUP/AAAAAAAAAACWjz3/op5G/9HKav/Rymr/0cpq/9HKav/Rymr/0cpq/9HKav/Rymr/0cpq/9HKav+inkb/nplD/wAAAAAAAAAAAAAAAKKeRv+3slb/0cpq/9HKav/Rymr/0cpq/9HKav/Rymr/0cpq/9HKav+1sFX/op5G/wAAAAAAAAAAAAAAAAAAAAAAAAAAop5GUKKeRv/Nxmf/0cpq/9HKav/Rymr/0cpq/83GZ/+inkb/op5GSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAop5G16KeRv/LxWb/y8Vm/6KeRv+inkaPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAop5G/6KeRtcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/n8AAPgfAADwDwAAwAMAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAwAMAAPAPAAD4HwAA/n8AAA==" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/redoc@2.0.0-rc.33/bundles/redoc.standalone.js" integrity="sha256-ncYbgkv2sDeNEdmjXfTI3JzNJeAeo/HHGmQf/fwV8vg=" crossorigin="anonymous"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    /* ---- global-ish font-family to match docs.ipfs.io ----- */
+    body, .WxWXp, .givSXQ, .iTiWpH, .ioYTqA, .jzElRo, .kBiOhJ, .dpMbau, .lcundD, .hjuNDJ, .eassAJ, .eTPsXv, .idRuNa, .hbxWyq, .hxqNKs {
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    }
+    /* ---- global-ish text color to match docs.ipfs.io ----- */
+    body, .WxWXp, .givSXQ, .iTiWpH, .ioYTqA, .jzElRo, .kBiOhJ, .hoUoen {
+      color: #202020;
+    }
+    /* ---- non-header font-size and line-height to match docs.ipfs.io ----- */
+    body, p, ul, ol, li, button, .eAybih, .fKyGWc, .hqYVjx, .lpeYvY, .edBCth, .jMEzIu button, .Vykdn, .XrbXS, .LiUBH, .beRszf, .hoUoen, .bGITIP, .dpMbau, .lcundD, .gbTit, .gsaTRZ > button, .dOwpAS > ul > li {
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    /* ---- global-ish link color to match docs.ipfs.io ----- */
+    .dttBLN, .dttBLN:hover, .dCnGCn a, .dCnGCn a:visited, .jGTcpi a, .jGTcpi a:visited, .eUwRiq a, .eUwRiq a:visited, .hmRbVC {
+      color: #3e9096;
+    }
+    /* ---- global-ish POST blue to match ipfs-css ----- */
+    .hjuNDJ, .hbxWyq.post {
+      background-color: #117eb3;
+    }
+    /* ---- global-ish DEL and error red to match ipfs-css ----- */
+    .eTPsXv, .hbxWyq.delete {
+      background-color: #ea5037;
+    }
+    .dOwpAS > ul > li.tab-error {
+      color: #ea5037;
+    }
+    /* ---- global-ish border consistency ----- */
+    .WxWXp, .LiUBH, .XrbXS, .kGwPhO, .ddXLZs:not(:last-of-type)::after {
+      border-bottom: 1px solid #d9dbe2;
+    }
+    .bmRLPL a, .bmRLPL a:visited, .bmRLPL a:hover {
+      border-top: 1px solid #d9dbe2;
+    }
+    /* ---- nav: background color ----- */
+    .khouzw {
+      background-color: #f7f8fa;
+    }
+    /* ---- nav: logo image ----- */
+    .evTpW {
+      padding: 1em 16px;
+    }
+    /* ---- nav text: primary items ----- */
+    .iTiWpH, .dttBLN {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    /* ---- nav text: secondary items ----- */
+    .hcwWID, .jBjYkL, .idRuNa, .hxqNKs {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    /* ---- nav text: active items ----- */
+    .hxqNKs, .dttBLN, .jBjYkL {
+      border-left: 4px solid #3e9096;
+      background-color: #fff;
+    }
+    .hxqNKs > .jzElRo, .dttBLN > .jzElRo, .jBjYkL > .jzElRo {
+      color: #3e9096;
+    }
+    /* ---- nav text: active item hover ----- */
+    .hxqNKs:hover, .dttBLN:hover, .jBjYkL:hover {
+      color: #3e9096;
+      background-color: #fff;
+    }
+    /* ---- nav text: inactive item hover ----- */
+    .idRuNa:hover, .iTiWpH:hover, .hcwWID:hover {
+      color: #3e9096;
+      background-color: #f7f8fa;
+    }
+    /* ---- nav badges ----- */
+    .hbxWyq {
+      font-size: 10px;
+      margin-top: 7px;
+    }
+    /* ---- nav text: ReDoc link ----- */
+    .bmRLPL a {
+      text-decoration: none;
+      color: #d9dbe2;
+    }
+    /* ---- running text: inline <code> ----- */
+    .dCnGCn code, .bMfIUD, .beUper {
+      color: rgba(51,51,51,.8);
+      padding: 3px 6px;
+      margin: 0;
+      background-color: rgba(27,31,35,.05);
+      border-radius: 3px;
+      border: 0px;
+      font-size: 1em;
+    }
+    /* ---- running text: decrease section padding ----- */
+    .cncswi {
+      padding: 1em 0;
+    }
+    /* ---- running text: H{x} in heavier weight ----- */
+    .WxWXp, .givSXQ, .ioYTqA, .kBiOhJ {
+      font-weight: 600;
+    }
+    /* ---- running text: Main title ----- */
+    .givSXQ {
+      font-size: 2rem;
+    }
+    /* ---- running text: H2 ----- */
+    .ioYTqA {
+      margin: 0;
+    }
+    /* ---- running text: responses expand/collapse and 'required' legend ----- */
+    .dUFXgZ, .bGITIP {
+      color: #ea5037;
+    }
+    .dUFXgZ:focus {
+      outline: #ea5037 auto;
+    }
+    /* ---- running text: regular buttons ----- */
+    .jrowNk {
+      background-color: #2b6569;
+      border: 0px;
+      border-radius: 2px;
+      color: #fff;
+      font-weight: 600;
+    }
+    .jrowNk:hover {
+      background-color: #439a9d;
+    }
+    /* ---- try-out area: background ----- */
+    .cObJOV, .celZWI {
+      background-color: #edf0f4;
+    }
+    /* ---- try-out area: H3 ----- */
+    .kBWwoV {
+      color: #202020;
+    }
+    /* ---- try-out area: drop-downs ----- */
+    .gLTsd, .iGGYCX {
+      background-color: #7f8491;
+    }
+    .gLTsd:focus, .iGGYCX:focus {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    /* ---- try-out area: GET/POST/DEL font weight ----- */
+    .eassAJ, .hjuNDJ, .eTPsXv {
+      font-weight: 600;
+    }
+    /* ---- try-out area: buttons ----- */
+    .dOwpAS > ul > li {
+      background-color: #b7bbc8;
+      border: 2px solid #b7bbc8;
+      border-radius: 2px;
+    }
+    /* ---- try-out area: code blocks ----- */
+    .dOwpAS > .react-tabs__tab-panel, .lcundD {
+    background-color: #0e2233;
+    border-radius: 6px;
+    }
+    .dpMbau, .lcundD, .gbTit, .gsaTRZ > button, .dOwpAS > ul > li {
+      color: #edf0f4;
+    }
+  </style>
 </head>
 <body>
   <div id="redoc-container"></div>
