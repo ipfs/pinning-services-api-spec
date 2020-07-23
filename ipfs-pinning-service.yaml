@@ -109,7 +109,7 @@ While these attributes can be vendor-specific, we encourage the community at lar
 
 
 
-## Authorization
+# Authorization
 
 An opaque authorization token is required to be sent with each request. There are two ways of doing so:
 
