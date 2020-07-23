@@ -42,7 +42,7 @@ It includes the `cid` of data to be pinned and optional metadata in `providers` 
 
 ### Pin status object
 
-`PinStatus` object is a representation of a pinning operation.
+The `PinStatus` object is a representation of a pinning operation.
 
 It includes original `pin` object along with current `status` and `id` which which can be used for status checks and management.
 
