@@ -28,7 +28,7 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 This section describes the most important object types and conventions.
 
 
-Full list of fields and schemas can be found in `schemas` section of the YAML file.
+A full list of fields and schemas can be found in the `schemas` section of the YAML file.
 
 ## Pin and its status
 
