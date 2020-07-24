@@ -9,15 +9,18 @@
 
 - [About](#about)
 - [Specification](#specification)
-- [Timeline](#timeline)
+- [Adoption](#adoption)
 - [Contribute](#contribute)
 
 ## About
 
 A Pinning Service is a service that accepts [CIDs](https://github.com/ipld/cid/) from a user and will host the data associated with them.
 
-The rationale behind defining a generic pinning service API is to have a baseline functionality and interface that can be provided by these services so that tools can be built on top of a common base of functionality.
+The rationale behind defining a generic pinning service API is to have a baseline functionality and interface that can be provided by these services so that tools can be built on top of a common base of functionality. 
 
+In [this presentation](https://youtu.be/Pcv8Bt4HMVU), IPFS creator Juan Benet discusses current and potential pinning use cases and how a standardized IPFS Pinning API could meet these envisioned needs. 
+
+The API spec in this repo is the first step towards that future.
 
 ## Specification 
 
@@ -32,7 +35,17 @@ API documentation generated from the YAML file can be found at:
 
 - **[https://ipfs.github.io/pinning-services-api-spec](https://ipfs.github.io/pinning-services-api-spec/)**
 
-## Timeline
+## Adoption
+
+We are working with pinning services to expose this API, stay tunned  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+  - `{this could be your project}`
+
+Built-in support for pinning services exposing this API is coming to IPFS tooling in Q3: 
+  - [go-ipfs](https://github.com/ipfs/go-ipfs) / [js-ipfs](https://github.com/ipfs/js-ipfs) (CLI/HTTP API)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+  - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) / [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) (GUIs) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+
+
+### Timeline
 
 - 2019 Q2 
   - Creation of a generic Pinning Service API proposed in [ipfs/notes/issues/378](https://github.com/ipfs/notes/issues/378)
