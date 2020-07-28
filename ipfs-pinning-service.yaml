@@ -173,8 +173,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Add an array of pin objects
-      description: Add an array of pin objects for the current user.
+      summary: Add pin object
+      description: Add a new pin object for the current access token.
       tags:
         - pins
       parameters:
@@ -184,12 +184,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Pin'
-              uniqueItems: true
-              minItems: 1
-              maxItems: 1000
+              $ref: '#/components/schemas/Pin'
       responses:
         '202':
           description: Accepted
