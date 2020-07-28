@@ -113,11 +113,11 @@ While these attributes can be vendor-specific, we encourage the community at lar
 Pin objects can be listed by executing `GET /pins` with optional parameters:
 
 
-- When no filters are provided, the endpoint will return a maximum of 1k most
+- When no filters are provided, the endpoint will return a small batch of 10 most
   recently created items, from the latest to the oldest.
 
 - The number of returned items can be adjusted with `limit` parameter
-  (implicit default is 1000).
+  (implicit default is 10).
 
 - If the value in `PinResults.count` is bigger than the length of
   `PinResults.results`, the client can infer there are more results that can be queried.
@@ -447,7 +447,7 @@ components:
         format: int32
         minimum: 1
         maximum: 1000
-        default: 1000
+        default: 10
 
     cid:
       description: return pin objects for the specified CID(s)
