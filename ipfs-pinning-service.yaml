@@ -120,7 +120,7 @@ Pin objects can be listed by executing `GET /pins` with optional parameters:
   (implicit default is 1000).
 
 - If the value in `PinResults.count` is bigger than the length of
-  `PinResults.results`, client knows there is more items to matching provided query.
+  `PinResults.results`, the client can infer there are more results that can be queried.
 
 - To read more items, pass the `before` filter with the timestamp from
   `PinStatus.created` found in the oldest item in the current batch of results.
