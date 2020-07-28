@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "0.0.3"
+  version: "0.0.4"
   title: 'IPFS Pinning Service API'
   x-logo:
     url: "https://bafybeidehxarrk54mkgyl5yxbgjzqilp6tkaz2or36jhq24n3rdtuven54.ipfs.dweb.link/?filename=ipfs-pinning-service.svg"
@@ -108,18 +108,6 @@ Pinning services are encouraged to add support for additional features by levera
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
 
 
-
-# Authorization
-
-An opaque authorization token is required to be sent with each request. There are two ways of doing so:
-
-1. Using an HTTP header: `Authorization: Bearer <auth>`
-
-2. Using a query parameter: `&auth=<auth>`
-
-
-The `auth` token should be generated per device, and user should have ability to revoke each token separately.
-
 "
 
 servers:
@@ -138,7 +126,6 @@ paths:
         - $ref: '#/components/parameters/skip'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/meta'
-        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -155,8 +142,6 @@ paths:
       description: Add an array of pin objects for the current user.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       requestBody:
         required: true
         content:
@@ -193,14 +178,11 @@ paths:
         required: true
         schema:
           type: string
-      - $ref: '#/components/parameters/auth'
     get:
       summary: Get pin object
       description: Get a pin object and its status.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -219,8 +201,6 @@ paths:
       description: Modify an existing pin object.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       requestBody:
         required: true
         content:
@@ -251,8 +231,6 @@ paths:
       description: Remove a pin object.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       responses:
         '202':
           description: Accepted
@@ -460,14 +438,6 @@ components:
           schema:
             $ref: '#/components/schemas/PinMeta'
 
-    auth:
-      description: optional auth token (alternative to Authorization header)
-      name: auth
-      in: query
-      required: false
-      schema:
-        type: string
-
   responses:
     BadRequest:
       description: Bad request (400)
@@ -477,7 +447,7 @@ components:
             $ref: '#/components/schemas/Error'
 
     Unauthorized:
-      description: Unauthorized (401)
+      description: Unauthorized (401); access token is missing or invalid
       content:
         application/json:
           schema:
@@ -505,8 +475,16 @@ components:
             $ref: '#/components/schemas/Error'
 
   securitySchemes:
-    tokenAuth:
+    accessToken:
+      description: "
+An opaque token is required to be sent with each request in HTTP header:
+
+- `Authorization: Bearer <access-token>`
+
+
+The `access-token` should be generated per device, and user should have ability to revoke each token separately.
+"
       type: http
       scheme: bearer
 security:
-  - tokenAuth: []
+  - accessToken: []
