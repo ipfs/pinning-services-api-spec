@@ -482,7 +482,7 @@ An opaque token is required to be sent with each request in HTTP header:
 - `Authorization: Bearer <access-token>`
 
 
-The `access-token` should be generated per device, and user should have ability to revoke each token separately.
+The `access-token` should be generated per device, and the user should have the ability to revoke each token separately.
 "
       type: http
       scheme: bearer
