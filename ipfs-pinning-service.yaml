@@ -428,7 +428,7 @@ components:
       example: "2020-07-27T17:32:28Z"
 
     after:
-      description: remove results created (queued) before provided timestamp
+      description: return results created (queued) after provided timestamp
       name: after
       in: query
       required: false
