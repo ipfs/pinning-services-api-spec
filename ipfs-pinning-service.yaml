@@ -418,7 +418,7 @@ components:
   parameters:
 
     before:
-      description: remove results created (queued) after provided timestamp
+      description: return results created (queued) before provided timestamp
       name: before
       in: query
       required: false
