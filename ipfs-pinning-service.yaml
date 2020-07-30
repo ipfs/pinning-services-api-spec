@@ -130,6 +130,11 @@ Pin objects can be listed by executing `GET /pins` with optional parameters:
   `status` or `meta` filters.
 
 
+> **Note**: pagination by the `created` timestamp requires each value to be
+  globally unique. Any future considerations to add support for bulk creation
+  must account for this.
+
+
 # Authorization
 
 An opaque authorization token is required to be sent with each request. There are two ways of doing so:
