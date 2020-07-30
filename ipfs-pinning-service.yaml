@@ -315,7 +315,7 @@ components:
           $ref: '#/components/schemas/StatusMeta'
 
     Pin:
-      description: pin object
+      description: Pin object
       type: object
       required:
         - cid
