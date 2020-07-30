@@ -135,17 +135,6 @@ Pin objects can be listed by executing `GET /pins` with optional parameters:
   must account for this.
 
 
-# Authorization
-
-An opaque authorization token is required to be sent with each request. There are two ways of doing so:
-
-1. Using an HTTP header: `Authorization: Bearer <auth>`
-
-2. Using a query parameter: `&auth=<auth>`
-
-
-The `auth` token should be generated per device, and user should have ability to revoke each token separately.
-
 "
 
 servers:
@@ -165,7 +154,6 @@ paths:
         - $ref: '#/components/parameters/after'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/meta'
-        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -182,8 +170,6 @@ paths:
       description: Add a new pin object for the current access token.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       requestBody:
         required: true
         content:
@@ -215,14 +201,11 @@ paths:
         required: true
         schema:
           type: string
-      - $ref: '#/components/parameters/auth'
     get:
       summary: Get pin object
       description: Get a pin object and its status.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       responses:
         '200':
           description: OK
@@ -241,8 +224,6 @@ paths:
       description: Modify an existing pin object.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       requestBody:
         required: true
         content:
@@ -273,8 +254,6 @@ paths:
       description: Remove a pin object.
       tags:
         - pins
-      parameters:
-        - $ref: '#/components/parameters/auth'
       responses:
         '202':
           description: Accepted
@@ -495,14 +474,6 @@ components:
           schema:
             $ref: '#/components/schemas/PinMeta'
 
-    auth:
-      description: optional auth token (alternative to Authorization header)
-      name: auth
-      in: query
-      required: false
-      schema:
-        type: string
-
   responses:
     BadRequest:
       description: Bad request (400)
@@ -512,7 +483,7 @@ components:
             $ref: '#/components/schemas/Error'
 
     Unauthorized:
-      description: Unauthorized (401)
+      description: Unauthorized (401); access token is missing or invalid
       content:
         application/json:
           schema:
@@ -540,8 +511,16 @@ components:
             $ref: '#/components/schemas/Error'
 
   securitySchemes:
-    tokenAuth:
+    accessToken:
+      description: "
+An opaque token is required to be sent with each request in HTTP header:
+
+- `Authorization: Bearer <access-token>`
+
+
+The `access-token` should be generated per device, and the user should have the ability to revoke each token separately.
+"
       type: http
       scheme: bearer
 security:
-  - tokenAuth: []
+  - accessToken: []
