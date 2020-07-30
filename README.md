@@ -7,6 +7,8 @@
 
 > This repository contains the specs for the vendor-agnostic pinning service API for the IPFS ecosystem
 
+[![pinning-services-api-contex.png](https://bafkreiffr3aebionzn4c3j7awih5erdwdlvrtjpdl4i3awyasslaaqpx2e.ipfs.dweb.link/?filename=pinning-services-api-contex.png)](#about)
+
 - [About](#about)
 - [Specification](#specification)
 - [Adoption](#adoption)

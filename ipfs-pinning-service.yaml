@@ -46,6 +46,9 @@ It includes the original `pin` object, along with current `status` and `id`, whi
 ## The pin lifecycle
 
 
+![pinning-services-api-objects.png](https://bafkreidoahwczlxww2y4d7d56cojpsuredfprtodzfzzadasbeyg7zftr4.ipfs.dweb.link/?filename=pinning-services-api-objects.png)
+
+
 ### Creating a new pin object
 
 The user sends one or more `Pin` objects via `POST /pins` and receives a `PinStatus` response for each:
