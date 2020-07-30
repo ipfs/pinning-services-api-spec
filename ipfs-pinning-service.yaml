@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "0.0.3"
+  version: "0.0.4"
   title: 'IPFS Pinning Service API'
   x-logo:
     url: "https://bafybeidehxarrk54mkgyl5yxbgjzqilp6tkaz2or36jhq24n3rdtuven54.ipfs.dweb.link/?filename=ipfs-pinning-service.svg"
@@ -108,6 +108,32 @@ Pinning services are encouraged to add support for additional features by levera
 While these attributes can be vendor-specific, we encourage the community at large to leverage these `meta` attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
 
 
+# Pagination and filtering
+
+Pin objects can be listed by executing `GET /pins` with optional parameters:
+
+
+- When no filters are provided, the endpoint will return a small batch of 10 most
+  recently created items, from the latest to the oldest.
+
+- The number of returned items can be adjusted with `limit` parameter
+  (implicit default is 10).
+
+- If the value in `PinResults.count` is bigger than the length of
+  `PinResults.results`, the client can infer there are more results that can be queried.
+
+- To read more items, pass the `before` filter with the timestamp from
+  `PinStatus.created` found in the oldest item in the current batch of results.
+  Repeat to read all results.
+
+- Returned results can be fine-tuned by applying optional `after`, `cid`,
+  `status` or `meta` filters.
+
+
+> **Note**: pagination by the `created` timestamp requires each value to be
+  globally unique. Any future considerations to add support for bulk creation
+  must account for this.
+
 
 # Authorization
 
@@ -135,7 +161,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/cid'
         - $ref: '#/components/parameters/status'
-        - $ref: '#/components/parameters/skip'
+        - $ref: '#/components/parameters/before'
+        - $ref: '#/components/parameters/after'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/meta'
         - $ref: '#/components/parameters/auth'
@@ -151,8 +178,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Add an array of pin objects
-      description: Add an array of pin objects for the current user.
+      summary: Add pin object
+      description: Add a new pin object for the current access token.
       tags:
         - pins
       parameters:
@@ -162,12 +189,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Pin'
-              uniqueItems: true
-              minItems: 1
-              maxItems: 1000
+              $ref: '#/components/schemas/Pin'
       responses:
         '202':
           description: Accepted
@@ -295,6 +317,7 @@ components:
       required:
         - id
         - status
+        - created
         - pin
         - providers
       properties:
@@ -304,6 +327,11 @@ components:
           example: "QmPinObject"
         status:
           $ref: '#/components/schemas/Status'
+        created:
+          description: immutable timestamp; indicates when pin request entered pinning service; can be used for filtering results and pagination
+          type: string
+          format: date-time  # RFC 3339, section 5.6
+          example: "2020-07-27T17:32:28Z"
         pin:
           $ref: '#/components/schemas/Pin'
         providers:
@@ -354,7 +382,6 @@ components:
       minItems: 0
       maxItems: 20
       example: ['/p2p/QmSourcePeerId']
-      
 
     PinMeta:
       description: optional metadata for pin object
@@ -365,7 +392,7 @@ components:
         maxProperties: 1000        
       example:
         app_id: "99986338-1113-4706-8302-4420da6158aa" # Pin.meta[app_id], useful for filtering pins per app
-      
+
     StatusMeta:
       description: optional metadata for PinStatus response
       type: object
@@ -375,8 +402,6 @@ components:
         maxProperties: 1000        
       example:
         status_details: "Fetching new data: 50% complete" # PinStatus.meta[status_details], when status=pinning
-            
-      
 
     Error:
       description: base error object
@@ -392,15 +417,25 @@ components:
 
   parameters:
 
-    skip:
-      description: number of items to skip
-      name: skip
+    before:
+      description: return results created (queued) before provided timestamp
+      name: before
       in: query
       required: false
       schema:
-        type: integer
-        format: int32
-        default: 0
+        type: string
+        format: date-time  # RFC 3339, section 5.6
+      example: "2020-07-27T17:32:28Z"
+
+    after:
+      description: return results created (queued) after provided timestamp
+      name: after
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time  # RFC 3339, section 5.6
+      example: "2020-07-27T17:32:28Z"
 
     limit:
       description: max records to return
@@ -412,7 +447,7 @@ components:
         format: int32
         minimum: 1
         maximum: 1000
-        default: 1000
+        default: 10
 
     cid:
       description: return pin objects for the specified CID(s)
