@@ -40,7 +40,7 @@ It includes the `cid` of data to be pinned, as well as optional metadata in `pro
 
 The `PinStatus` object is a representation of a pinning operation.
 
-It includes the original `pin` object, along with current `status` and `id`, which can be used for status checks and management.
+It includes the original `pin` object, along with current `status` and globally unique `id`, which can be used for status checks and management.
 
 
 ## The pin lifecycle
@@ -53,7 +53,7 @@ It includes the original `pin` object, along with current `status` and `id`, whi
 
 The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` response:
 
-- `id` in `PinStatus` is `cid-of-pin-object`, which can can be used for checking status, modifying the pin, and/or removing the pin in the future
+- `id` in `PinStatus` is the identifier of the pin operation, which can can be used for checking status, modifying the pin, and/or removing the pin in the future
 
 - `status` in `PinStatus` indicates the current state of a pin
 
@@ -63,17 +63,17 @@ The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` respons
 `status` (in `PinStatus`) may indicate a pending state (`queued` or `pinning`). This means the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
 
 
-In this case, the user can periodically check pinning progress via `GET /pins/{cid-of-pin-object}` until pinning is successful, or the user decides to remove the pending pin.
+In this case, the user can periodically check pinning progress via `GET /pins/{id}` until pinning is successful, or the user decides to remove the pending pin.
 
 
 ### Modifying an existing pin object
 
-The user can modify an existing pin object via `POST /pins/{cid-of-pin-object}`. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
+The user can modify an existing pin object via `POST /pins/{id}`. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
 ### Removing a pin object
 
-A pin object can be removed via `DELETE /pins/{cid-of-pin-object}`.
+A pin object can be removed via `DELETE /pins/{id}`.
 
 
 
@@ -193,9 +193,9 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /pins/{cid-of-pin-object}:
+  /pins/{id}:
     parameters:
-      - name: cid-of-pin-object
+      - name: id
         in: path
         required: true
         schema:
