@@ -125,7 +125,7 @@ Pin objects can be listed by executing `GET /pins` with optional parameters:
   `PinStatus.created` found in the oldest item in the current batch of results.
   Repeat to read all results.
 
-- Returned results can be fine-tuned by applying optional `after`, `cid`,
+- Returned results can be fine-tuned by applying optional `after`, `cid`, `name`,
   `status`, or `meta` filters.
 
 
@@ -327,6 +327,11 @@ components:
           description: CID to be pinned recursively
           type: string
           example: "QmCIDToBePinned"
+        name:
+          description: Optional name for pinned data; can be used for lookups later
+          type: string
+          maxLength: 255
+          example: "my precious data"
         providers:
           $ref: '#/components/schemas/DataProviders'
         meta:
@@ -448,6 +453,16 @@ components:
         multipleIds:
           summary: Example of multiple CIDs
           value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
+
+    name:
+      description: Return pin objects with names that contain provided value (partial or full match)
+      name: name
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 255
+      example: "my precious"
 
     status:
       description: Return pin objects for pins with the specified status
