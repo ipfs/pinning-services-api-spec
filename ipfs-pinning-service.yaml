@@ -148,6 +148,7 @@ paths:
         - pins
       parameters:
         - $ref: '#/components/parameters/cid'
+        - $ref: '#/components/parameters/name'
         - $ref: '#/components/parameters/status'
         - $ref: '#/components/parameters/before'
         - $ref: '#/components/parameters/after'
