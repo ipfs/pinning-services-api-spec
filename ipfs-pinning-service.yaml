@@ -30,10 +30,14 @@ A full list of fields and schemas can be found in the `schemas` section of the [
 
 ### Pin object
 
+
+![pinning-services-api-pin-object.png](https://bafybeidcoyxd723nakggdayy6qg25bl7mls3ilwwiyxmys5qpek7y6jwc4.ipfs.dweb.link/?filename=pinning-services-api-pin-object.png)
+
+
 The `Pin` object is a representation of a pin request.
 
 
-It includes the `cid` of data to be pinned, as well as optional metadata in `origins` and `meta`.
+It includes the `cid` of data to be pinned, as well as optional metadata in `name`, `origins` and `meta`.
 
 
 ### Pin status object
