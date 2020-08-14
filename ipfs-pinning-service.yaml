@@ -46,7 +46,7 @@ It includes the original `pin` object, along with current `status` and globally 
 ## The pin lifecycle
 
 
-![pinning-services-api-objects.png](https://bafkreidoahwczlxww2y4d7d56cojpsuredfprtodzfzzadasbeyg7zftr4.ipfs.dweb.link/?filename=pinning-services-api-objects.png)
+![pinning-services-api-objects.png](https://bafybeigyefq6vwfcsi7dfgqunf4uei426lvia3w73ylg4kgdwwg6txivpe.ipfs.dweb.link/?filename=pinning-services-api-objects.png)
 
 
 ### Creating a new pin object
