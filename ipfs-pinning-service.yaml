@@ -300,7 +300,7 @@ components:
         - providers
       properties:
         id:
-          description: CID of pin object; can be used to check status of ongoing pinning
+          description: Globally unique ID of the pin object; can be used to check status of ongoing pinning
           type: string
           example: "QmPinObject"
         status:
@@ -428,7 +428,7 @@ components:
         default: 10
 
     cid:
-      description: Return pin objects for the specified CID(s)
+      description: Return pin objects responsible for pinning the specified CID(s)
       name: cid
       in: query
       required: false
