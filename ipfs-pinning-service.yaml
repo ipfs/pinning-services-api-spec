@@ -48,7 +48,7 @@ It includes the `cid` of data to be pinned, as well as optional metadata in `nam
 
 The `PinStatus` object is a representation of the current state of a pinning operation.
 
-It includes the original `pin` object, along with current `status` and globally unique `id` of the entire pinning request, which can be used for future status checks and management.
+It includes the original `pin` object, along with the current `status` and globally unique `id` of the entire pinning request, which can be used for future status checks and management.
 Addresses in the `delegates` array are peers delegated by the pinning service for facilitating direct file transfers (more details in the provider hints section). Any additional vendor-specific information is returned in optional `info`.
 
 
