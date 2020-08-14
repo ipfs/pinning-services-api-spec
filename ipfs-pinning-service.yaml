@@ -33,7 +33,7 @@ A full list of fields and schemas can be found in the `schemas` section of the [
 The `Pin` object is a representation of a pin request.
 
 
-It includes the `cid` of data to be pinned, as well as optional metadata in `providers` and `meta`.
+It includes the `cid` of data to be pinned, as well as optional metadata in `origins` and `meta`.
 
 
 ### Pin status object
@@ -80,13 +80,13 @@ A pin object can be removed via `DELETE /pins/{id}`.
 ## Provider hints
 
 Pinning of new data can be accelerated by providing a list of known data
-sources in `Pin.providers`, and connecting at least one of them to pinning
-service nodes at `PinStatus.providers`.
-:
+sources in `Pin.origins`, and connecting at least one of them to pinning
+service nodes at `PinStatus.delegates`.
+
 
 The most common scenario is a client putting its own IPFS node's multiaddrs in
-`Pin.providers`,  and then directly connecting to every multiaddr returned by
-a pinning service in `PinStatus.providers` to initiate transfer.
+`Pin.origins`,  and then directly connecting to every multiaddr returned by
+a pinning service in `PinStatus.delegates` to initiate transfer.
 
 
 This ensures data transfer starts immediately (without waiting for provider
@@ -323,7 +323,7 @@ components:
         - status
         - created
         - pin
-        - providers
+        - delegates
       properties:
         id:
           description: Globally unique ID of the pin request; can be used to check status of ongoing pinning, modification of pin object or pin removal
@@ -338,8 +338,8 @@ components:
           example: "2020-07-27T17:32:28Z"
         pin:
           $ref: '#/components/schemas/Pin'
-        providers:
-          $ref: '#/components/schemas/ServiceProviders'
+        delegates:
+          $ref: '#/components/schemas/Delegates'
         info:
           $ref: '#/components/schemas/StatusInfo'
 
@@ -358,8 +358,8 @@ components:
           type: string
           maxLength: 255
           example: "my precious data"
-        providers:
-          $ref: '#/components/schemas/DataProviders'
+        origins:
+          $ref: '#/components/schemas/Origins'
         meta:
           $ref: '#/components/schemas/PinMeta'
 
@@ -372,7 +372,7 @@ components:
         - pinned     # pinned successfully
         - failed     # pinning service was unable to finish pinning operation; additional info can be found in info[status_details]
 
-    ServiceProviders:
+    Delegates:
       description: List of multiaddrs designated by pinning service for transferring any new data from external peers
       type: array
       items:
@@ -382,7 +382,7 @@ components:
       maxItems: 20
       example: ['/dnsaddr/pin-service.example.com']
 
-    DataProviders:
+    Origins:
       description: Optional list of multiaddrs known to provide the data
       type: array
       items:
