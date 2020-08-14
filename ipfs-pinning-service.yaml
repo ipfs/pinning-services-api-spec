@@ -335,7 +335,7 @@ components:
         - delegates
       properties:
         id:
-          description: Globally unique ID of the pin request; can be used to check status of ongoing pinning, modification of pin object, or pin removal
+          description: Globally unique ID of the pin request; can be used to check the status of ongoing pinning, modification of pin object, or pin removal
           type: string
           example: "UniqueIdOfPinRequest"
         status:
