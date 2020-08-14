@@ -37,7 +37,7 @@ A full list of fields and schemas can be found in the `schemas` section of the [
 The `Pin` object is a representation of a pin request.
 
 
-It includes the `cid` of data to be pinned, as well as optional metadata in `name`, `origins` and `meta`.
+It includes the `cid` of data to be pinned, as well as optional metadata in `name`, `origins`, and `meta`.
 
 
 ### Pin status response
@@ -48,8 +48,8 @@ It includes the `cid` of data to be pinned, as well as optional metadata in `nam
 
 The `PinStatus` object is a representation of the current state of a pinning operation.
 
-It includes the original `pin` object, along with current `status` and globally unique `id` of entire pinning request, which can be used for future status checks and management.
-Addresses in `delegates` array are peers delegated by pinning service for facilitating direct file transfers (more details in provider hints section). Any additional vendor-specific information is returned in optional `info`.
+It includes the original `pin` object, along with current `status` and globally unique `id` of the entire pinning request, which can be used for future status checks and management.
+Addresses in the `delegates` array are peers delegated by the pinning service for facilitating direct file transfers (more details in the provider hints section). Any additional vendor-specific information is returned in optional `info`.
 
 
 ## The pin lifecycle
@@ -105,8 +105,8 @@ issues in restrictive network topologies such as NATs.
 
 ## Custom metadata
 
-Pinning services are encouraged to add support for additional features by leveraging optional `Pin.meta` and `PinStatus.info` fields.
-While these attributes can be application or vendor-specific, we encourage the community at large to leverage these attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
+Pinning services are encouraged to add support for additional features by leveraging the optional `Pin.meta` and `PinStatus.info` fields.
+While these attributes can be application- or vendor-specific, we encourage the community at large to leverage these attributes as a sandbox to come up with conventions that could become part of future revisions of this API.
 
 ### Pin metadata
 
@@ -117,7 +117,7 @@ Potential uses:
 
 - `Pin.meta[app_id]`: Attaching a unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
 
-- `Pin.meta[vendor_policy]`: Vendor-specific policy (which region use, how many copies keep)
+- `Pin.meta[vendor_policy]`: Vendor-specific policy (for example: which region to use, how many copies to keep)
 
 
 Note that it is OK for a client to omit or ignore these optional attributes; doing so should not impact the basic pinning functionality.
@@ -130,16 +130,16 @@ Additional `PinStatus.info` can be returned by pinning service.
 
 Potential uses:
 
-- `PinStatus.info[status_details]`: more info about current status (queue
-  position, % of transferred data, summary of where data is stored etc); when
+- `PinStatus.info[status_details]`: more info about the current status (queue
+  position, percentage of transferred data, summary of where data is stored, etc); when
   `PinStatus.status=failed`, it could provide a reason why a pin operation
   failed (e.g. lack of funds, DAG too big, etc.)
 
-- `PinStatus.info[dag_size]`: the size of pinned data along with DAG overhead
+- `PinStatus.info[dag_size]`: the size of pinned data, along with DAG overhead
 
 - `PinStatus.info[raw_size]`: the size of data without DAG overhead (eg. unixfs)
 
-- `PinStatus.info[pinned_until]`: if vendor supports time-bound pins, this could indicate when pin will expire
+- `PinStatus.info[pinned_until]`: if vendor supports time-bound pins, this could indicate when the pin will expire
 
 
 # Pagination and filtering
@@ -335,7 +335,7 @@ components:
         - delegates
       properties:
         id:
-          description: Globally unique ID of the pin request; can be used to check status of ongoing pinning, modification of pin object or pin removal
+          description: Globally unique ID of the pin request; can be used to check status of ongoing pinning, modification of pin object, or pin removal
           type: string
           example: "UniqueIdOfPinRequest"
         status:
