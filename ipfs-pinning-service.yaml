@@ -40,11 +40,16 @@ The `Pin` object is a representation of a pin request.
 It includes the `cid` of data to be pinned, as well as optional metadata in `name`, `origins` and `meta`.
 
 
-### Pin status object
+### Pin status response
 
-The `PinStatus` object is a representation of a pinning operation.
 
-It includes the original `pin` object, along with current `status` and globally unique `id`, which can be used for status checks and management.
+![pinning-services-api-pin-status-response.png](https://bafybeiec3c3gzsus4rksddsuxcybilex3odq5cm2cyrzrb7m3suwspl6uy.ipfs.dweb.link/?filename=pinning-services-api-pin-status-response.png)
+
+
+The `PinStatus` object is a representation of the current state of a pinning operation.
+
+It includes the original `pin` object, along with current `status` and globally unique `id` of entire pinning request, which can be used for future status checks and management.
+Addresses in `delegates` array are peers delegated by pinning service for facilitating direct file transfers (more details in provider hints section). Any additional vendor-specific information is returned in optional `info`.
 
 
 ## The pin lifecycle
