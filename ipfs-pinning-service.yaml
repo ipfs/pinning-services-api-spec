@@ -481,13 +481,7 @@ components:
         maxItems: 1000
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
-      examples:
-        oneId:
-          summary: Example of a single CID
-          value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR]   # ?cid=Qm
-        multipleIds:
-          summary: Example of multiple CIDs
-          value: [QmbWqxBEKC3P8tqsKc98xmWNzrzDtRLMiMPL8wBuTGsMnR,bafkreigtdgsgv2f3bkhsmxvku3bpnnqzubcxeupf7fff5f7l7tlm2v237a]   # ?cid=Qm,bafy
+      example: ["Qm1","Qm2","bafy3"]
 
     name:
       description: Return pin objects with names that contain provided value (partial or full match)
@@ -512,6 +506,7 @@ components:
         minItems: 1
       style: form # ?status=queued,pinning
       explode: false
+      example: ["queued","pinning"]
 
     meta:
       description: Return pin objects that match specified metadata
