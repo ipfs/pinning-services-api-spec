@@ -484,7 +484,7 @@ components:
       example: ["Qm1","Qm2","bafy3"]
 
     name:
-      description: Return pin objects with names that contain provided value (partial or full match)
+      description: Return pin objects with names that contain provided value (case-sensitive, partial or full match)
       name: name
       in: query
       required: false
