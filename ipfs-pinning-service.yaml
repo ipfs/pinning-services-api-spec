@@ -191,15 +191,13 @@ paths:
         - $ref: '#/components/parameters/meta'
       responses:
         '200':
-          description: OK
+          description: Successful response (PinResults object)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PinResults'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/Error'
     post:
       summary: Add pin object
       description: Add a new pin object for the current access token
@@ -213,21 +211,13 @@ paths:
               $ref: '#/components/schemas/Pin'
       responses:
         '202':
-          description: Accepted
+          description: Successful response (PinStatus object)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/InsufficientFunds'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/Error'
 
   /pins/{id}:
     parameters:
@@ -243,17 +233,13 @@ paths:
         - pins
       responses:
         '200':
-          description: OK
+          description: Successful response (PinStatus object)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/Error'
     post:
       summary: Modify pin object
       description: Modify an existing pin object
@@ -267,21 +253,13 @@ paths:
               $ref: '#/components/schemas/Pin'
       responses:
         '202':
-          description: Accepted
+          description: Successful response (PinStatus object)
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/InsufficientFunds'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/Error'
     delete:
       summary: Remove pin object
       description: Remove a pin object
@@ -289,15 +267,9 @@ paths:
         - pins
       responses:
         '202':
-          description: Accepted
+          description: Successful response (no body, pin removed)
         '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/Error'
 
 components:
   schemas:
@@ -422,16 +394,24 @@ components:
         status_details: "Queue position: 7 of 9" # PinStatus.info[status_details], when status=queued
 
     Error:
-      description: Base error object
+      description: Error object
       type: object
       required:
-        - code
-        - message
+        - error
       properties:
-        code:
-          type: integer
-        message:
-          type: string
+        error:
+          type: object
+          required:
+            - reason
+          properties:
+            reason:
+              type: string
+              description: Mandatory string identifying the type of error
+              example: "INVALID_ACCESS_TOKEN"
+            details:
+              type: string
+              description: Optional, longer description of the error; may include UUID of transaction for support, links to documentation etc
+              example: "Unauthorized: access token is missing or invalid"
 
   parameters:
 
@@ -519,36 +499,8 @@ components:
             $ref: '#/components/schemas/PinMeta'
 
   responses:
-    BadRequest:
-      description: Bad request (400)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
-    Unauthorized:
-      description: Unauthorized (401); access token is missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
-    NotFound:
-      description: The specified resource was not found (404)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
-    InsufficientFunds:
-      description: Insufficient funds (409)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
-    InternalServerError:
-      description: Internal server error (500)
+    Error:
+      description: Error response
       content:
         application/json:
           schema:
