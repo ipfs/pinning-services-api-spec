@@ -197,7 +197,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/PinResults'
         '400':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: Add pin object
       description: Add a new pin object for the current access token
@@ -217,7 +225,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
 
   /pins/{id}:
     parameters:
@@ -239,7 +255,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: Modify pin object
       description: Modify an existing pin object
@@ -259,7 +283,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/PinStatus'
         '400':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Remove pin object
       description: Remove a pin object
@@ -269,7 +301,15 @@ paths:
         '202':
           description: Successful response (no body, pin removed)
         '400':
-          $ref: '#/components/responses/Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/InsufficientFunds'
+        '5XX':
+          $ref: '#/components/responses/InternalServerError'
 
 components:
   schemas:
@@ -407,11 +447,11 @@ components:
             reason:
               type: string
               description: Mandatory string identifying the type of error
-              example: "INVALID_ACCESS_TOKEN"
+              example: "ERROR_CODE_FOR_MACHINES"
             details:
               type: string
               description: Optional, longer description of the error; may include UUID of transaction for support, links to documentation etc
-              example: "Unauthorized: access token is missing or invalid"
+              example: "Optional explanation for humans with more details"
 
   parameters:
 
@@ -499,12 +539,93 @@ components:
             $ref: '#/components/schemas/PinMeta'
 
   responses:
-    Error:
-      description: Error response
+
+    BadRequest:
+      description: Error response (Bad request)
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          examples:
+            BadRequestExample:
+              $ref: '#/components/examples/BadRequestExample'
+
+    Unauthorized:
+      description: Error response (Unauthorized; access token is missing or invalid)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            UnauthorizedExample:
+              $ref: '#/components/examples/UnauthorizedExample'
+
+    NotFound:
+      description: Error response (The specified resource was not found)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            NotFoundExample:
+              $ref: '#/components/examples/NotFoundExample'
+
+    InsufficientFunds:
+      description: Error response (Insufficient funds)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            InsufficientFundsExample:
+              $ref: '#/components/examples/InsufficientFundsExample'
+
+    InternalServerError:
+      description: Error response (Unexpected internal server error)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            InternalServerErrorExample:
+              $ref: '#/components/examples/InternalServerErrorExample'
+
+  examples:
+
+    BadRequestExample:
+      value:
+        error:
+          reason: "BAD_REQUEST"
+          details: "Explanation for humans with more details"
+      summary: A sample response to a bad request; reason will differ
+
+    UnauthorizedExample:
+      value:
+        error:
+          reason: "UNAUTHORIZED"
+          details: "Access token is missing or invalid"
+      summary: Response to an unauthorized request
+
+    NotFoundExample:
+      value:
+        error:
+          reason: "NOT_FOUND"
+          details: "The specified resource was not found"
+      summary: Response to a request for a resource that does not exist
+
+    InsufficientFundsExample:
+      value:
+        error:
+          reason: "INSUFFICIENT_FUNDS"
+          details: "Unable to process request due to the lack of funds"
+      summary: Response when access token run out of funds
+
+    InternalServerErrorExample:
+      value:
+        error:
+          reason: "INTERNAL_SERVER_ERROR"
+          details: "Explanation for humans with more details"
+      summary: Response when unexpected error occured
 
   securitySchemes:
     accessToken:
