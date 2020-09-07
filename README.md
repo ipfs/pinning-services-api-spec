@@ -46,8 +46,6 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - [go-ipfs](https://github.com/ipfs/go-ipfs) / [js-ipfs](https://github.com/ipfs/js-ipfs) (CLI/HTTP API)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
   - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) / [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) (GUIs) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
-Below is the growing list of libraries and services implementing the API.
-
 ### Client libraries
 - [go-pinning-service-http-client](https://github.com/ipfs/go-pinning-service-http-client)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)  
   An IPFS Pinning Service HTTP Client library for Go
