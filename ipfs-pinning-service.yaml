@@ -204,6 +204,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/InsufficientFunds'
+        '4XX':
+          $ref: '#/components/responses/CustomServiceError'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -232,6 +234,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/InsufficientFunds'
+        '4XX':
+          $ref: '#/components/responses/CustomServiceError'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
 
@@ -262,6 +266,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/InsufficientFunds'
+        '4XX':
+          $ref: '#/components/responses/CustomServiceError'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     post:
@@ -290,6 +296,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/InsufficientFunds'
+        '4XX':
+          $ref: '#/components/responses/CustomServiceError'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     delete:
@@ -308,6 +316,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '409':
           $ref: '#/components/responses/InsufficientFunds'
+        '4XX':
+          $ref: '#/components/responses/CustomServiceError'
         '5XX':
           $ref: '#/components/responses/InternalServerError'
 
@@ -580,6 +590,16 @@ components:
             InsufficientFundsExample:
               $ref: '#/components/examples/InsufficientFundsExample'
 
+    CustomServiceError:
+      description: Error response (Custom service error)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            CustomServiceErrorExample:
+              $ref: '#/components/examples/CustomServiceErrorExample'
+
     InternalServerError:
       description: Error response (Unexpected internal server error)
       content:
@@ -619,6 +639,13 @@ components:
           reason: "INSUFFICIENT_FUNDS"
           details: "Unable to process request due to the lack of funds"
       summary: Response when access token run out of funds
+
+    CustomServiceErrorExample:
+      value:
+        error:
+          reason: "CUSTOM_ERROR_CODE_FOR_MACHINES"
+          details: "Optional explanation for humans with more details"
+      summary: Response when a custom error occured
 
     InternalServerErrorExample:
       value:
