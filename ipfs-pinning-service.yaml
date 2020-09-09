@@ -256,7 +256,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       summary: Replace pin object
-      description: Replace an existing pin object; atomic shortcut for executing remove and add
+      description: Replace an existing pin object (shortcut for executing both remove and add in one step)
       tags:
         - pins
       requestBody:
