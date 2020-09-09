@@ -77,7 +77,7 @@ In this case, the user can periodically check pinning progress via `GET /pins/{i
 
 ### Replacing an existing pin object
 
-The user can replace an existing pin object via `POST /pins/{id}`. This is an atomic shortcut for removing pin object identified by `id` and creating a new one in a single API call. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
+The user can replace an existing pin object via `POST /pins/{id}`. This is a shortcut for removing a pin object identified by `id` and creating a new one in a single API call. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
 ### Removing a pin object
