@@ -12,6 +12,9 @@
 - [About](#about)
 - [Specification](#specification)
 - [Adoption](#adoption)
+  - [Client libraries](#client-libraries)
+  - [Server implementations](#server-implementations)
+  - [Online services](#online-services)
 - [Contribute](#contribute)
 
 ## About
@@ -39,13 +42,21 @@ You can find human-readable API documentation generated from the YAML file here:
 
 ## Adoption
 
-We are currently working with pinning services to expose this API — so stay tuned!  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
-  - `{your project could go here}`
-
 Built-in support for pinning services exposing this API is coming to IPFS tooling in Q3: 
   - [go-ipfs](https://github.com/ipfs/go-ipfs) / [js-ipfs](https://github.com/ipfs/js-ipfs) (CLI/HTTP API)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
   - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) / [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) (GUIs) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
+### Client libraries
+- [go-pinning-service-http-client](https://github.com/ipfs/go-pinning-service-http-client)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)  
+  An IPFS Pinning Service HTTP Client library for Go
+
+### Server implementations
+- https://github.com/ipfs-shipyard/rb-pinning-service-api ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)  
+  A Rails app that implements the IPFS Pinning Service API
+
+### Online services
+- `{your project could go here}`  
+  We are currently working with pinning services to expose this API — so stay tuned!  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
 ### Timeline
 
@@ -59,6 +70,8 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
     - [Analysis of remote pinning services vs the needs of IPFS Web UI](https://docs.google.com/document/d/1f0R7woLtW_YTv9P9IOrUNK6QafgctJ7qTggEUdepD_c/)
   - [ipfs/pinning-services-api-specs](https://github.com/ipfs/pinning-services-api-specs) is created as a place for stakeholders to collaborate and finalize the API
     - 2020-07-14: Spec in draft status is ready for implementation
+    - 2020-08: Addressing feedback from early implementers
+    - 2020-09: End-to-end testing
 
 
 ## Contribute
