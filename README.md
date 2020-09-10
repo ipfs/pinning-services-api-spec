@@ -71,7 +71,7 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - [ipfs/pinning-services-api-specs](https://github.com/ipfs/pinning-services-api-specs) is created as a place for stakeholders to collaborate and finalize the API
     - 2020-07-14: Spec in draft status is ready for implementation
     - 2020-08: Addressing feedback from early implementers
-    - 2020-09: End to end testing
+    - 2020-09: End-to-end testing
 
 
 ## Contribute
