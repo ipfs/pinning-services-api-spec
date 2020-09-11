@@ -75,9 +75,9 @@ The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` respons
 In this case, the user can periodically check pinning progress via `GET /pins/{id}` until pinning is successful, or the user decides to remove the pending pin.
 
 
-### Modifying an existing pin object
+### Replacing an existing pin object
 
-The user can modify an existing pin object via `POST /pins/{id}`. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
+The user can replace an existing pin object via `POST /pins/{id}`. This is a shortcut for removing a pin object identified by `id` and creating a new one in a single API call that protects against undesired garbage collection of blocks common to both pins. Useful when updating a pin representing a huge dataset where most of blocks did not change. The new pin object `id` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
 ### Removing a pin object
@@ -255,8 +255,8 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
     post:
-      summary: Modify pin object
-      description: Modify an existing pin object
+      summary: Replace pin object
+      description: Replace an existing pin object (shortcut for executing remove and add operations in one step to avoid unnecessary garbage collection of blocks present in both recursive pins)
       tags:
         - pins
       requestBody:
