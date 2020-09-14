@@ -478,7 +478,7 @@ components:
           type: string
         uniqueItems: true
         minItems: 1
-        maxItems: 1000
+        maxItems: 10
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       example: ["Qm1","Qm2","bafy3"]
