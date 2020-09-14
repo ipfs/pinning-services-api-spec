@@ -468,7 +468,7 @@ components:
         default: 10
 
     cid:
-      description: Return pin objects responsible for pinning the specified CID(s)
+      description: Return pin objects responsible for pinning the specified CID(s); be aware that using longer hash functions introduces further constraints on the number of CIDs that will fit under the limit of 2000 characters per URL  in browser contexts
       name: cid
       in: query
       required: false
