@@ -33,16 +33,16 @@ A full list of fields and schemas can be found in the `schemas` section of the [
 
 [Content Identifier (CID)](https://docs.ipfs.io/concepts/content-addressing/) points at the root of a DAG that is pinned recursively.
 
-### pid
+### requestid
 
-Unique identifier of a pin request. Multiple request can point at the same `cid` but have different `name` or other metadata attached, `pid` is used for differentiating between them.
+Unique identifier of a pin request. Multiple request can point at the same `cid` but have different `name` or other metadata attached, `requestid` is used for differentiating between them.
 
 ## Objects
 
 ### Pin object
 
 
-![pin object](https://bafybeigmmkhesreasirllvgzentfyegi5pws5pdqob3efi5d5win7v3loq.ipfs.dweb.link/pin.png)
+![pin object](https://bafybeideck2fchyxna4wqwc2mo67yriokehw3yujboc5redjdaajrk2fjq.ipfs.dweb.link/pin.png)
 
 
 The `Pin` object is a representation of a pin request.
@@ -54,26 +54,26 @@ It includes the `cid` of data to be pinned, as well as optional metadata in `nam
 ### Pin status response
 
 
-![pin status response object](https://bafybeigmmkhesreasirllvgzentfyegi5pws5pdqob3efi5d5win7v3loq.ipfs.dweb.link/pinstatus.png)
+![pin status response object](https://bafybeideck2fchyxna4wqwc2mo67yriokehw3yujboc5redjdaajrk2fjq.ipfs.dweb.link/pinstatus.png)
 
 
 The `PinStatus` object is a representation of the current state of a pinning operation.
 
-It includes the original `pin` object, along with the current `status` and globally unique `pid` of the entire pinning request, which can be used for future status checks and management.
+It includes the original `pin` object, along with the current `status` and globally unique `requestid` of the entire pinning request, which can be used for future status checks and management.
 Addresses in the `delegates` array are peers delegated by the pinning service for facilitating direct file transfers (more details in the provider hints section). Any additional vendor-specific information is returned in optional `info`.
 
 
 ## The pin lifecycle
 
 
-![pinning service objects and lifecycle](https://bafybeigmmkhesreasirllvgzentfyegi5pws5pdqob3efi5d5win7v3loq.ipfs.dweb.link/lifecycle.png)
+![pinning service objects and lifecycle](https://bafybeideck2fchyxna4wqwc2mo67yriokehw3yujboc5redjdaajrk2fjq.ipfs.dweb.link/lifecycle.png)
 
 
 ### Creating a new pin object
 
 The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` response:
 
-- `pid` in `PinStatus` is the identifier of the pin operation, which can can be used for checking status, and removing the pin in the future
+- `requestid` in `PinStatus` is the identifier of the pin operation, which can can be used for checking status, and removing the pin in the future
 
 - `status` in `PinStatus` indicates the current state of a pin
 
@@ -83,17 +83,17 @@ The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` respons
 `status` (in `PinStatus`) may indicate a pending state (`queued` or `pinning`). This means the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
 
 
-In this case, the user can periodically check pinning progress via `GET /pins/{pid}` until pinning is successful, or the user decides to remove the pending pin.
+In this case, the user can periodically check pinning progress via `GET /pins/{requestid}` until pinning is successful, or the user decides to remove the pending pin.
 
 
 ### Replacing an existing pin object
 
-The user can replace an existing pin object via `POST /pins/{pid}`. This is a shortcut for removing a pin object identified by `pid` and creating a new one in a single API call that protects against undesired garbage collection of blocks common to both pins. Useful when updating a pin representing a huge dataset where most of blocks did not change. The new pin object `pid` is returned in the `PinStatus` response. The old pin object is deleted automatically.
+The user can replace an existing pin object via `POST /pins/{requestid}`. This is a shortcut for removing a pin object identified by `requestid` and creating a new one in a single API call that protects against undesired garbage collection of blocks common to both pins. Useful when updating a pin representing a huge dataset where most of blocks did not change. The new pin object `requestid` is returned in the `PinStatus` response. The old pin object is deleted automatically.
 
 
 ### Removing a pin object
 
-A pin object can be removed via `DELETE /pins/{pid}`.
+A pin object can be removed via `DELETE /pins/{requestid}`.
 
 
 
@@ -240,9 +240,9 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /pins/{pid}:
+  /pins/{requestid}:
     parameters:
-      - name: pid
+      - name: requestid
         in: path
         required: true
         schema:
@@ -339,13 +339,13 @@ components:
       description: Pin object with status
       type: object
       required:
-        - pid
+        - requestid
         - status
         - created
         - pin
         - delegates
       properties:
-        pid:
+        requestid:
           description: Globally unique identifier of the pin request; can be used to check the status of ongoing pinning, or pin removal
           type: string
           example: "UniqueIdOfPinRequest"
