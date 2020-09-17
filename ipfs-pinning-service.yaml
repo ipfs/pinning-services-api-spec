@@ -35,7 +35,14 @@ A full list of fields and schemas can be found in the `schemas` section of the [
 
 ### requestid
 
-Unique identifier of a pin request. Multiple request can point at the same `cid` but have different `name` or other metadata attached, `requestid` is used for differentiating between them.
+Unique identifier of a pin request.
+
+
+When a pin is created the service responds with unique `requestid` that can be later used for pin removal. When the same `cid` is pinned again a different `requestid` is returned to differentiate between those pin requests.
+
+
+Service implementation should use UUID, `hash(accessToken,Pin,PinStatus.created)`, or any other opaque identifier that provides equally strong protection against race conditions.
+
 
 ## Objects
 
