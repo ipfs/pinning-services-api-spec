@@ -468,7 +468,7 @@ components:
         default: 10
 
     cid:
-      description: Return pin objects responsible for pinning the specified CID(s)
+      description: Return pin objects responsible for pinning the specified CID(s); be aware that using longer hash functions introduces further constraints on the number of CIDs that will fit under the limit of 2000 characters per URL  in browser contexts
       name: cid
       in: query
       required: false
@@ -478,7 +478,7 @@ components:
           type: string
         uniqueItems: true
         minItems: 1
-        maxItems: 1000
+        maxItems: 10
       style: form # ?cid=Qm1,Qm2,bafy3
       explode: false
       example: ["Qm1","Qm2","bafy3"]
