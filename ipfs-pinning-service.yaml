@@ -461,8 +461,8 @@ components:
       example:
         status_details: "Queue position: 7 of 9" # PinStatus.info[status_details], when status=queued
 
-    Error:
-      description: Error object
+    Failure:
+      description: Response for a failed request
       type: object
       required:
         - error
