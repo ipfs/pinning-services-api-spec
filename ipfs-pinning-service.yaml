@@ -461,8 +461,8 @@ components:
       example:
         status_details: "Queue position: 7 of 9" # PinStatus.info[status_details], when status=queued
 
-    Error:
-      description: Error object
+    Failure:
+      description: Response for a failed request
       type: object
       required:
         - error
@@ -573,7 +573,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             BadRequestExample:
               $ref: '#/components/examples/BadRequestExample'
@@ -583,7 +583,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             UnauthorizedExample:
               $ref: '#/components/examples/UnauthorizedExample'
@@ -593,7 +593,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             NotFoundExample:
               $ref: '#/components/examples/NotFoundExample'
@@ -603,7 +603,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             InsufficientFundsExample:
               $ref: '#/components/examples/InsufficientFundsExample'
@@ -613,7 +613,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             CustomServiceErrorExample:
               $ref: '#/components/examples/CustomServiceErrorExample'
@@ -623,7 +623,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error'
+            $ref: '#/components/schemas/Failure'
           examples:
             InternalServerErrorExample:
               $ref: '#/components/examples/InternalServerErrorExample'
