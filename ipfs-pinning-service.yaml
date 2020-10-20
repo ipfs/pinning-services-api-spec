@@ -468,7 +468,7 @@ components:
       default: exact
       enum:
         - exact   # full match, case-sensitive (the implicit default)
-        - fuzzy   # partial match, case-insensitive
+        - partial # partial match, case-insensitive
 
     Failure:
       description: Response for a failed request
