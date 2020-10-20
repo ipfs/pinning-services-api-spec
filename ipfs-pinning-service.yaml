@@ -467,8 +467,10 @@ components:
       type: string
       default: exact
       enum:
-        - exact   # full match, case-sensitive (the implicit default)
-        - partial # partial match, case-insensitive
+        - exact    # full match, case-sensitive (the implicit default)
+        - iexact   # full match, case-insensitive
+        - partial  # partial match, case-sensitive
+        - ipartial # partial match, case-insensitive
 
     Failure:
       description: Response for a failed request
