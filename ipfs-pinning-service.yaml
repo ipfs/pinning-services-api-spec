@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: "0.1.1"
+  version: "0.1.2"
   title: 'IPFS Pinning Service API'
   x-logo:
     url: "https://bafybeidehxarrk54mkgyl5yxbgjzqilp6tkaz2or36jhq24n3rdtuven54.ipfs.dweb.link/?filename=ipfs-pinning-service.svg"
