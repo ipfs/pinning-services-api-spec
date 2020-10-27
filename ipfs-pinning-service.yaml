@@ -202,6 +202,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/cid'
         - $ref: '#/components/parameters/name'
+        - $ref: '#/components/parameters/match'
         - $ref: '#/components/parameters/status'
         - $ref: '#/components/parameters/before'
         - $ref: '#/components/parameters/after'
@@ -406,7 +407,7 @@ components:
           description: Optional name for pinned data; can be used for lookups later
           type: string
           maxLength: 255
-          example: "my precious data"
+          example: "PreciousData.pdf"
         origins:
           $ref: '#/components/schemas/Origins'
         meta:
@@ -460,6 +461,16 @@ components:
         maxProperties: 1000
       example:
         status_details: "Queue position: 7 of 9" # PinStatus.info[status_details], when status=queued
+
+    TextMatchingStrategy:
+      description: Alternative text matching strategy
+      type: string
+      default: exact
+      enum:
+        - exact    # full match, case-sensitive (the implicit default)
+        - iexact   # full match, case-insensitive
+        - partial  # partial match, case-sensitive
+        - ipartial # partial match, case-insensitive
 
     Failure:
       description: Response for a failed request
@@ -532,14 +543,23 @@ components:
       example: ["Qm1","Qm2","bafy3"]
 
     name:
-      description: Return pin objects with names that contain provided value (case-insensitive, partial or full match)
+      description: Return pin objects with specified name (by default a case-sensitive, exact match)
       name: name
       in: query
       required: false
       schema:
         type: string
         maxLength: 255
-      example: "my precious"
+      example: "PreciousData.pdf"
+
+    match:
+      description: Customize the text matching strategy applied when name filter is present
+      name: match
+      in: query
+      required: false
+      schema:
+        $ref: '#/components/schemas/TextMatchingStrategy'
+      example: exact
 
     status:
       description: Return pin objects for pins with the specified status
