@@ -11,6 +11,7 @@
 
 - [About](#about)
 - [Specification](#specification)
+  - [Code generation](#code-generation) (client/server)
 - [Adoption](#adoption)
   - [Client libraries](#client-libraries)
   - [Server implementations](#server-implementations)
@@ -39,6 +40,12 @@ This API is defined as an OpenAPI spec in YAML format:
 You can find human-readable API documentation generated from the YAML file here:
 
 - **[https://ipfs.github.io/pinning-services-api-spec](https://ipfs.github.io/pinning-services-api-spec/)**
+
+### Code generation
+
+https://openapi-generator.tech allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically, given the OpenAPI spec at [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml).
+
+Give it a try before you resort to implementing things from scratch.
 
 ## Adoption
 
