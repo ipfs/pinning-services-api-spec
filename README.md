@@ -45,7 +45,7 @@ You can find human-readable API documentation generated from the YAML file here:
 
 https://openapi-generator.tech allows generation of API client libraries (SDK generation), server stubs, documentation and configuration automatically, given the OpenAPI spec at [ipfs-pinning-service.yaml](./ipfs-pinning-service.yaml).
 
-Give it a try before you try implementing things from scratch.
+Give it a try before you resort to implementing things from scratch.
 
 ## Adoption
 
