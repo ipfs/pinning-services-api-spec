@@ -538,8 +538,8 @@ components:
         uniqueItems: true
         minItems: 1
         maxItems: 10
-      style: form # ?cid=Qm1,Qm2,bafy3
-      explode: false
+      style: form # ?cid=Qm1&cid=Qm2&cid=bafy3
+      explode: true
       example: ["Qm1","Qm2","bafy3"]
 
     name:
@@ -572,8 +572,8 @@ components:
           $ref: '#/components/schemas/Status'
         uniqueItems: true
         minItems: 1
-      style: form # ?status=queued,pinning
-      explode: false
+      style: form # ?status=queued&status=pinning
+      explode: true
       example: ["queued","pinning"]
 
     meta:
