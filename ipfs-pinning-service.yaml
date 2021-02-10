@@ -131,6 +131,11 @@ pinning operation. When unable to act on explicit provider hints, DHT and
 other discovery methods should be used as a fallback by a pinning service.
 
 
+**NOTE:** All multiaddrs MUST end with `/p2p/{peerID}` and SHOULD be fully
+resolved and confirmed to be dialable from the public internet. Avoid sending
+addresses from local networks.
+
+
 ## Custom metadata
 
 Pinning services are encouraged to add support for additional features by leveraging the optional `Pin.meta` and `PinStatus.info` fields.
@@ -450,7 +455,7 @@ components:
       uniqueItems: true
       minItems: 0
       maxItems: 20
-      example: ['/ip4/192.0.2.42/tcp/4001/p2p/QmSourcePeerId', '/ip4/198.51.100.14/udp/4001/quic/p2p/QmSourcePeerId']
+      example: ['/ip4/203.0.113.142/tcp/4001/p2p/QmSourcePeerId', '/ip4/203.0.113.114/udp/4001/quic/p2p/QmSourcePeerId']
 
     PinMeta:
       description: Optional metadata for pin object
