@@ -126,7 +126,7 @@ issues in restrictive network topologies, such as NATs, firewalls, etc.
 
 **NOTE:** Connections to multiaddrs in `origins` and `delegates` arrays should
 be attempted in best-effort fashion, and dial failure should not fail the
-pinning operation. When unable to act on explicit provider hints,  DHT and
+pinning operation. When unable to act on explicit provider hints, DHT and
 other discovery methods should be used as a fallback by pinning service.
 
 
