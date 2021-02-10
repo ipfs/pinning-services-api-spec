@@ -120,8 +120,9 @@ in `Pin.origins`.
 
 
 This ensures data transfer starts immediately (without waiting for provider
-discovery over DHT), and direct dial from a client works around peer routing
-issues in restrictive network topologies, such as NATs, firewalls, etc.
+discovery over DHT), and mutual direct dial between a client and a service
+works around peer routing issues in restrictive network topologies, such as
+NATs, firewalls, etc.
 
 
 **NOTE:** Connections to multiaddrs in `origins` and `delegates` arrays should
