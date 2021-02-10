@@ -106,19 +106,28 @@ A pin object can be removed via `DELETE /pins/{requestid}`.
 
 ## Provider hints
 
-Pinning of new data can be accelerated by providing a list of known data
-sources in `Pin.origins`, and connecting at least one of them to pinning
-service nodes at `PinStatus.delegates`.
+Pinning service will use DHT and other discovery methods to locate pinned
+content, however it is a good practice to provide additional provider hints to
+speedup the discovery phase and start the transfer immediately, especially if a
+client has the data in own datastore, or knows of other providers already.
 
 
 The most common scenario is a client putting its own IPFS node's multiaddrs in
-`Pin.origins`,  and then directly connecting to every multiaddr returned by
-a pinning service in `PinStatus.delegates` to initiate transfer.
+`Pin.origins`,  and then attempt to connect to every multiaddr returned by a
+pinning service in `PinStatus.delegates` to initiate transfer.  At the same
+time, pinning service will try to connect to multiaddrs provided by the client
+in  `Pin.origins`.
 
 
 This ensures data transfer starts immediately (without waiting for provider
 discovery over DHT), and direct dial from a client works around peer routing
-issues in restrictive network topologies such as NATs.
+issues in restrictive network topologies such as NATs, firewalls etc.
+
+
+**NOTE:** connections to multiaddrs in `origins` and `delegates` arrays should
+be attempted in best-effort fashion, and dial failure should not fail the
+pinning operation. When unable to act on explicit provider hints,  DHT and
+other discovery methods should be used as a fallback by pinning service.
 
 
 ## Custom metadata
@@ -430,7 +439,7 @@ components:
       uniqueItems: true
       minItems: 1
       maxItems: 20
-      example: ['/dnsaddr/pin-service.example.com']
+      example: ['/ip4/203.0.113.1/tcp/4001/p2p/QmServicePeerId']
 
     Origins:
       description: Optional list of multiaddrs known to provide the data
@@ -440,7 +449,7 @@ components:
       uniqueItems: true
       minItems: 0
       maxItems: 20
-      example: ['/p2p/QmSourcePeerId']
+      example: ['/ip4/192.0.2.42/tcp/4001/p2p/QmSourcePeerId', '/ip4/198.51.100.14/udp/4001/quic/p2p/QmSourcePeerId']
 
     PinMeta:
       description: Optional metadata for pin object
