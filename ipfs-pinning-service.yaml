@@ -116,7 +116,7 @@ The most common scenario is a client putting its own IPFS node's multiaddrs in
 `Pin.origins`,  and then attempt to connect to every multiaddr returned by a
 pinning service in `PinStatus.delegates` to initiate transfer.  At the same
 time, a pinning service will try to connect to multiaddrs provided by the client
-in  `Pin.origins`.
+in `Pin.origins`.
 
 
 This ensures data transfer starts immediately (without waiting for provider
