@@ -108,7 +108,7 @@ A pin object can be removed via `DELETE /pins/{requestid}`.
 
 A pinning service will use the DHT and other discovery methods to locate pinned
 content; however, it is a good practice to provide additional provider hints to
-speedup the discovery phase and start the transfer immediately, especially if a
+speed up the discovery phase and start the transfer immediately, especially if a
 client has the data in own datastore, or knows of other providers already.
 
 
