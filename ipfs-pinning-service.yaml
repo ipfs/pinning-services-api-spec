@@ -109,7 +109,7 @@ A pin object can be removed via `DELETE /pins/{requestid}`.
 A pinning service will use the DHT and other discovery methods to locate pinned
 content; however, it is a good practice to provide additional provider hints to
 speed up the discovery phase and start the transfer immediately, especially if a
-client has the data in own datastore, or knows of other providers already.
+client has the data in their own datastore or already knows of other providers.
 
 
 The most common scenario is a client putting its own IPFS node's multiaddrs in
