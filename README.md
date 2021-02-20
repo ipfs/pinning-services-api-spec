@@ -70,6 +70,8 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   Use [YAML file](./ipfs-pinning-service.yaml) to generate server boilerplate for your language
 
 ### Online services
+
+- Pinata (https://pinata.cloud/documentation#PinningServicesAPI)
 - `{your project could go here}`  
   We are currently working with pinning services to expose this API — so stay tuned!  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
