@@ -79,6 +79,7 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 
 - 2021 Q1
   - [go-ipfs 0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0) shipped with built-in client for v1.0.0 of this API
+  - Pinata announces endpoint compatible with this spec (https://pinata.cloud/documentation#PinningServicesAPI)
 - 2020 Q3
   - IPFS GUI WG working on adding support for pinning services into IPFS Desktop/Web UI:
     - [Epic: Pinning service integration · Issue #91 · ipfs/ipfs-gui](https://github.com/ipfs/ipfs-gui/issues/91)
