@@ -50,9 +50,9 @@ Give it a try before you resort to implementing things from scratch.
 ## Adoption
 
 Built-in support for pinning services exposing this API is coming to IPFS tooling: 
-  - [go-ipfs](https://github.com/ipfs/go-ipfs)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)
+  - [go-ipfs](https://github.com/ipfs/go-ipfs)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (since 0.8.0)
   - [js-ipfs-http-client](https://www.npmjs.com/package/ipfs-http-client) ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)
-  - [js-ipfs](https://www.npmjs.com/package/ipfs)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+  - [js-ipfs](https://www.npmjs.com/package/ipfs) – https://github.com/ipfs/js-ipfs/pull/3588 ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
   - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) / [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) (GUIs) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
 ### Client libraries
