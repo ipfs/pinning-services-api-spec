@@ -69,6 +69,11 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 - https://openapi-generator.tech/docs/generators#server-generators ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
   Use [YAML file](./ipfs-pinning-service.yaml) to generate server boilerplate for your language
 
+### CI/CD
+
+- https://github.com/marketplace/actions/ipfs-remote-pinning  
+  IPFS Pinning GitHub Action that adds data to IPFS and pins it to any `ENDPOINT` compatible with Pinning Service API
+
 ### Online services
 
 - Pinata (https://pinata.cloud/documentation#PinningServicesAPI)
