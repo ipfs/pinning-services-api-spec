@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/made%20by-Protocol%20Labs-blue.svg?style=flat-square)](http://protocol.ai)
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](https://ipfs.io/)
-[![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=master)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amaster)
+[![](https://github.com/ipfs/pinning-services-api-spec/workflows/Lint/badge.svg?branch=main)](https://github.com/ipfs/pinning-services-api-spec/actions?query=workflow%3ALint+branch%3Amain)
 [![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)](https://github.com/ipfs/specs/#understanding-the-meaning-of-the-spec-badges-and-their-lifecycle)
 
 > This repository contains the specs for the vendor-agnostic pinning service API for the IPFS ecosystem
