@@ -161,7 +161,7 @@ While these attributes can be application- or vendor-specific, we encourage the 
 ## Pin metadata
 
 String keys and values passed in `Pin.meta` are persisted with the pin object.
-This is an opt-in feature: it is OK for a client to omit or ignore these optional attributes; doing so should not impact the basic pinning functionality.
+This is an opt-in feature: It is OK for a client to omit or ignore these optional attributes, and doing so should not impact the basic pinning functionality.
 
 
 Potential uses:
