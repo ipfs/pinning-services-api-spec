@@ -171,10 +171,23 @@ Potential uses:
 - `Pin.meta[vendor_policy]`: Vendor-specific policy (for example: which region to use, how many copies to keep)
 
 
+### Filtering based on metadata
+
+The contents of `Pin.meta` can be used as an advanced search filter for situations where searching by `name` and `cid` is not enough.
+
+
+Metadata key matching rule is `AND`:
+
+- lookup returns pins that have `meta` with all key-value pairs matching the passed values
+
+- pins can have more keys, but only ones passed in the query are used for filtering
+
+
 The wire format for the `meta` when used as a query parameter is a [URL-escaped](https://en.wikipedia.org/wiki/Percent-encoding) stringified JSON object.
 A lookup example for pins that have a `meta` key-value pair `{\"app_id\":\"UUID\"}` is:
 
 - `GET /pins?meta=%7B%22app_id%22%3A%22UUID%22%7D`
+
 
 
 ## Pin status info
