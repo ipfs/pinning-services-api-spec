@@ -180,7 +180,7 @@ Metadata key matching rule is `AND`:
 
 - lookup returns pins that have `meta` with all key-value pairs matching the passed values
 
-- pins can have more keys, but only ones passed in the query are used for filtering
+- pin metadata may have more keys, but only ones passed in the query are used for filtering
 
 
 The wire format for the `meta` when used as a query parameter is a [URL-escaped](https://en.wikipedia.org/wiki/Percent-encoding) stringified JSON object.
@@ -602,7 +602,7 @@ components:
       example: "PreciousData.pdf"
 
     match:
-      description: Customize the text matching strategy applied when name filter is present: exact (the default) is case-sensitive exact match, partial is matching anywhere in the name, ipartial and iexact are case-insensitive versions
+      description: Customize the text matching strategy applied when the name filter is present: exact (the default) is a case-sensitive exact match, partial matches anywhere in the name, iexact and ipartial are case-insensitive versions of the exact and partial strategies
       name: match
       in: query
       required: false
