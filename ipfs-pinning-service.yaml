@@ -602,7 +602,7 @@ components:
       example: "PreciousData.pdf"
 
     match:
-      description: Customize the text matching strategy applied when name filter is present
+      description: Customize the text matching strategy applied when name filter is present: exact (the default) is case-sensitive exact match, partial is matching anywhere in the name, ipartial and iexact are case-insensitive versions
       name: match
       in: query
       required: false
