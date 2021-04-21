@@ -613,7 +613,7 @@ components:
       example: ["queued","pinning"]
 
     meta:
-      description: Return pin objects that match specified metadata keys passed as a string representation of a JSON object; when implementing a client library make sure the parameter is URL-encoded to ensure safe transport
+      description: Return pin objects that match specified metadata keys passed as a string representation of a JSON object; when implementing a client library, make sure the parameter is URL-encoded to ensure safe transport
       name: meta
       in: query
       required: false
