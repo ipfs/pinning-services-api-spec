@@ -50,10 +50,12 @@ Give it a try before you resort to implementing things from scratch.
 ## Adoption
 
 Built-in support for pinning services exposing this API is coming to IPFS tooling: 
-  - [go-ipfs](https://github.com/ipfs/go-ipfs)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (since 0.8.0)
-  - [js-ipfs-http-client](https://www.npmjs.com/package/ipfs-http-client) ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)
-  - [js-ipfs](https://www.npmjs.com/package/ipfs) – https://github.com/ipfs/js-ipfs/pull/3588 ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
-  - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) / [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) (GUIs) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+  - [go-ipfs](https://github.com/ipfs/go-ipfs)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (since [v0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0): `ipfs pin remote --help`, see how to [work with remote pinning services](https://docs.ipfs.io/how-to/work-with-pinning-services/))
+  - [js-ipfs-http-client](https://www.npmjs.com/package/ipfs-http-client) ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (`ipfs.pin.remote.*` JS APIs)
+  - [ipfs-cluster](https://cluster.ipfs.io) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) ([discussion](https://github.com/protocol/web3-dev-team/pull/100#discussion_r617149560))
+  - [js-ipfs](https://github.com/ipfs/js-ipfs#readme) – ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) ([js-ipfs/pull/3588](https://github.com/ipfs/js-ipfs/pull/3588))
+  - [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  (remote pin support since [v2.12.0](https://github.com/ipfs/ipfs-webui/releases/v2.12.0))
+  - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
 
 ### Client libraries
 - [go-pinning-service-http-client](https://github.com/ipfs/go-pinning-service-http-client)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)  
@@ -76,15 +78,18 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 
 ### Online services
 
-- Pinata (https://pinata.cloud/documentation#PinningServicesAPI)
-- `{your project could go here}`  
-  We are currently working with pinning services to expose this API — so stay tuned!  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+- Pinata (https://pinata.cloud/documentation#PinningServicesAPI) provides 1GB of storage for free to get you started
+  - `ipfs pin remote service add pinata https://api.pinata.cloud/psa YOUR_JWT`
+- Free Storage for NFTs (https://nft.storage)
+  - `ipfs pin remote service add nft.storage https://nft.storage/api YOUR_API_KEY`
+- `{your project could be here}` – open a PR!
 
 ### Timeline
 
 - 2021 Q1
   - [go-ipfs 0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0) shipped with built-in client for v1.0.0 of this API
-  - Pinata announces endpoint compatible with this spec (https://pinata.cloud/documentation#PinningServicesAPI)
+  - Pinata announces endpoint compatible with this spec: https://pinata.cloud/documentation#PinningServicesAPI
+  - ipfs-webui [v2.12.0](https://github.com/ipfs/ipfs-webui/releases/v2.12.0) provides UI based on `pin remote` commands
 - 2020 Q3
   - IPFS GUI WG working on adding support for pinning services into IPFS Desktop/Web UI:
     - [Epic: Pinning service integration · Issue #91 · ipfs/ipfs-gui](https://github.com/ipfs/ipfs-gui/issues/91)
