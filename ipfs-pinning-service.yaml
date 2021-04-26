@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   version: "1.0.0"
   title: 'IPFS Pinning Service API'
@@ -16,7 +16,24 @@ The IPFS Pinning Service API is intended to be an implementation-agnostic API&#x
 - For use in client mode by IPFS nodes and GUI-based applications
 
 
-> **Note**: while ready for implementation, this spec is still a work in progress! 🏗️  **Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).**
+### Document scope and intended audience
+
+The intended audience of this document is **IPFS developers** building pinning service clients or servers compatible with this OpenAPI spec.
+Your input and feedback are welcome and valuable as we develop this API spec. Please join the design discussion at [github.com/ipfs/pinning-services-api-spec](https://github.com/ipfs/pinning-services-api-spec).
+
+
+**IPFS users** should see the tutorial at [docs.ipfs.io/how-to/work-with-pinning-services](https://docs.ipfs.io/how-to/work-with-pinning-services/) instead.
+
+
+### Related resources
+
+The latest version of this spec and additional resources can be found at:
+
+- Specification: https://github.com/ipfs/pinning-services-api-spec/raw/main/ipfs-pinning-service.yaml
+
+- Docs: https://ipfs.github.io/pinning-services-api-spec/
+
+- Clients and services: https://github.com/ipfs/pinning-services-api-spec#adoption
 
 
 # Schemas
@@ -144,16 +161,33 @@ While these attributes can be application- or vendor-specific, we encourage the 
 ## Pin metadata
 
 String keys and values passed in `Pin.meta` are persisted with the pin object.
+This is an opt-in feature: It is OK for a client to omit or ignore these optional attributes, and doing so should not impact the basic pinning functionality.
 
 
 Potential uses:
 
-- `Pin.meta[app_id]`: Attaching a unique identifier to pins created by an app enables filtering pins per app via `?meta={\"app_id\":<UUID>}`
+- `Pin.meta[app_id]`: Attaching a unique identifier to pins created by an app enables meta-filtering pins per app
 
 - `Pin.meta[vendor_policy]`: Vendor-specific policy (for example: which region to use, how many copies to keep)
 
 
-Note that it is OK for a client to omit or ignore these optional attributes; doing so should not impact the basic pinning functionality.
+### Filtering based on metadata
+
+The contents of `Pin.meta` can be used as an advanced search filter for situations where searching by `name` and `cid` is not enough.
+
+
+Metadata key matching rule is `AND`:
+
+- lookup returns pins that have `meta` with all key-value pairs matching the passed values
+
+- pin metadata may have more keys, but only ones passed in the query are used for filtering
+
+
+The wire format for the `meta` when used as a query parameter is a [URL-escaped](https://en.wikipedia.org/wiki/Percent-encoding) stringified JSON object.
+A lookup example for pins that have a `meta` key-value pair `{\"app_id\":\"UUID\"}` is:
+
+- `GET /pins?meta=%7B%22app_id%22%3A%22UUID%22%7D`
+
 
 
 ## Pin status info
@@ -568,7 +602,7 @@ components:
       example: "PreciousData.pdf"
 
     match:
-      description: Customize the text matching strategy applied when name filter is present
+      description: Customize the text matching strategy applied when the name filter is present; exact (the default) is a case-sensitive exact match, partial matches anywhere in the name, iexact and ipartial are case-insensitive versions of the exact and partial strategies
       name: match
       in: query
       required: false
@@ -592,7 +626,7 @@ components:
       example: ["queued","pinning"]
 
     meta:
-      description: Return pin objects that match specified metadata
+      description: Return pin objects that match specified metadata keys passed as a string representation of a JSON object; when implementing a client library, make sure the parameter is URL-encoded to ensure safe transport
       name: meta
       in: query
       required: false
