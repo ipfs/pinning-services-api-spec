@@ -81,7 +81,7 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 - Pinata (https://pinata.cloud/documentation#PinningServicesAPI) provides 1GB of storage for free to get you started
   - `ipfs pin remote service add pinata https://api.pinata.cloud/psa YOUR_JWT`
 - Free Storage for NFTs (https://nft.storage)
-  - `ipfs pin remote service add nft.storage https://nft.storage/api YOUR_API_KEY`
+  - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
 - `{your project could be here}` – open a PR!
 
 ### Timeline
