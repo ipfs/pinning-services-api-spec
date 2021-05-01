@@ -82,6 +82,7 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - `ipfs pin remote service add pinata https://api.pinata.cloud/psa YOUR_JWT`
 - Free Storage for NFTs (https://nft.storage)
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
+- Textile Buckets – [coming soon!](https://github.com/textileio/textile/discussions/499)
 - `{your project could be here}` – open a PR!
 
 ### Timeline
@@ -90,6 +91,7 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - [go-ipfs 0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0) shipped with built-in client for v1.0.0 of this API
   - Pinata announces endpoint compatible with this spec: https://pinata.cloud/documentation#PinningServicesAPI
   - ipfs-webui [v2.12.0](https://github.com/ipfs/ipfs-webui/releases/v2.12.0) provides UI based on `pin remote` commands
+  - Textile is [working on Bucket Pinning API](https://github.com/textileio/textile/discussions/499)
 - 2020 Q3
   - IPFS GUI WG working on adding support for pinning services into IPFS Desktop/Web UI:
     - [Epic: Pinning service integration · Issue #91 · ipfs/ipfs-gui](https://github.com/ipfs/ipfs-gui/issues/91)
