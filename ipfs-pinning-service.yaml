@@ -73,6 +73,7 @@ The `Pin` object is a representation of a pin request.
 
 
 It includes the `cid` of data to be pinned, as well as optional metadata in `name`, `origins`, and `meta`.
+Addresses provided in `origins` list are relevant only during the initial pinning, and don't need to be persisted by the pinning service.
 
 
 ### Pin status response
@@ -83,7 +84,7 @@ It includes the `cid` of data to be pinned, as well as optional metadata in `nam
 
 The `PinStatus` object is a representation of the current state of a pinning operation.
 
-It includes the original `pin` object, along with the current `status` and globally unique `requestid` of the entire pinning request, which can be used for future status checks and management.
+It includes values from the original `Pin` object, along with the current `status` and globally unique `requestid` of the entire pinning request, which can be used for future status checks and management.
 Addresses in the `delegates` array are peers delegated by the pinning service for facilitating direct file transfers (more details in the provider hints section). Any additional vendor-specific information is returned in optional `info`.
 
 
