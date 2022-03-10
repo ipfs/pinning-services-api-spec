@@ -85,7 +85,7 @@ Addresses provided in `origins` list are relevant only during the initial pinnin
 The `PinStatus` object is a representation of the current state of a pinning operation.
 
 It includes values from the original `Pin` object, along with the current `status` and globally unique `requestid` of the entire pinning request, which can be used for future status checks and management.
-Addresses in the `delegates` array are peers delegated by the pinning service for facilitating direct file transfers (more details in the provider hints section). Any additional vendor-specific information is returned in optional `info`.
+Addresses in the `delegates` array are peers designated by pinning service that will receive the pin data over bitswap (more details in the [Provider hints](#section/Provider-hints) section). Any additional vendor-specific information is returned in optional `info`.
 
 
 # The pin lifecycle
@@ -124,10 +124,45 @@ A pin object can be removed via `DELETE /pins/{requestid}`.
 
 # Provider hints
 
+Provider hints take the form of two [multiaddr](https://docs.ipfs.io/concepts/glossary/#multiaddr) lists: `Pin.origins` and `PinStatus.delegates`
+
+
+## Pin.origins
+
+A list of known sources (providers) of the data. Sent by a client in a pin request.
+Pinning service will try to connect to them to speed up data transfer.
+
+
+## PinStatus.delegates
+
+A list of temporary destination (retrievers) for the data. Returned by pinning service in a response for a pin request.
+These peers are provided by a pinning service for the purpose of fetching data about to be pinned.
+
+
+## Optimizing for speed and connectivity
+
+Both ends should attempt to preconnect to each other:
+
+- Delegates should always preconnect to origins
+
+- Clients who initiate pin request and also have the pinned data in their own local datastore should preconnect to delegates
+
+
+**NOTE:** Connections to multiaddrs in `origins` and `delegates` arrays should
+be attempted in best-effort fashion, and dial failure should not fail the
+pinning operation. When unable to act on explicit provider hints, DHT and
+other discovery methods should be used as a fallback by a pinning service.
+
+
+## Rationale
+
 A pinning service will use the DHT and other discovery methods to locate pinned
-content; however, it is a good practice to provide additional provider hints to
-speed up the discovery phase and start the transfer immediately, especially if a
-client has the data in their own datastore or already knows of other providers.
+content; however, it may not be able to retrieve data if the only provider
+has no publicly diallable address (e.g. a desktop peer behind a restrictive NAT/firewall).
+
+
+Leveraging provider hints mitigates potential connectivity issues and speeds up the content routing phase.
+If a client has the data in their own datastore or already knows of other providers, the transfer will start immediately.
 
 
 The most common scenario is a client putting its own IPFS node's multiaddrs in
@@ -141,12 +176,6 @@ This ensures data transfer starts immediately (without waiting for provider
 discovery over DHT), and mutual direct dial between a client and a service
 works around peer routing issues in restrictive network topologies, such as
 NATs, firewalls, etc.
-
-
-**NOTE:** Connections to multiaddrs in `origins` and `delegates` arrays should
-be attempted in best-effort fashion, and dial failure should not fail the
-pinning operation. When unable to act on explicit provider hints, DHT and
-other discovery methods should be used as a fallback by a pinning service.
 
 
 **NOTE:** All multiaddrs MUST end with `/p2p/{peerID}` and SHOULD be fully
@@ -473,7 +502,7 @@ components:
         - failed     # pinning service was unable to finish pinning operation; additional info can be found in info[status_details]
 
     Delegates:
-      description: List of multiaddrs designated by pinning service for transferring any new data from external peers
+      description: List of multiaddrs designated by pinning service that will receive the pin data; see Provider Hints in the docs
       type: array
       items:
         type: string
@@ -483,7 +512,7 @@ components:
       example: ['/ip4/203.0.113.1/tcp/4001/p2p/QmServicePeerId']
 
     Origins:
-      description: Optional list of multiaddrs known to provide the data
+      description: Optional list of multiaddrs known to provide the data; see Provider Hints in the docs
       type: array
       items:
         type: string
