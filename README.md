@@ -52,22 +52,26 @@ Give it a try before you resort to implementing things from scratch.
 Built-in support for pinning services exposing this API is coming to IPFS tooling: 
   - [go-ipfs](https://github.com/ipfs/go-ipfs)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (since [v0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0): `ipfs pin remote --help`, see how to [work with remote pinning services](https://docs.ipfs.io/how-to/work-with-pinning-services/))
   - [js-ipfs-http-client](https://www.npmjs.com/package/ipfs-http-client) ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square) (`ipfs.pin.remote.*` JS APIs)
-  - [ipfs-cluster](https://cluster.ipfs.io) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) ([discussion](https://github.com/protocol/web3-dev-team/pull/100#discussion_r617149560))
+  - [ipfs-cluster](https://cluster.ipfs.io) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) ([issue](https://github.com/ipfs/ipfs-cluster/issues/1213))
   - [js-ipfs](https://github.com/ipfs/js-ipfs#readme) – ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square) ([js-ipfs/pull/3588](https://github.com/ipfs/js-ipfs/pull/3588))
   - [ipfs-webui](https://github.com/ipfs-shipyard/ipfs-webui) ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  (remote pin support since [v2.12.0](https://github.com/ipfs/ipfs-webui/releases/v2.12.0))
-  - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+  - [ipfs-desktop](https://github.com/ipfs-shipyard/ipfs-desktop) ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square) (>0.20.x)
 
 ### Client libraries
+- [js-pinning-service-http-client](https://github.com/ipfs-shipyard/js-pinning-service-http-client/)  ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)  
+  An IPFS Pinning Service HTTP Client library for JS, used in [compliance test suite](https://github.com/ipfs/pinning-services-api-spec/issues/64).
 - [go-pinning-service-http-client](https://github.com/ipfs/go-pinning-service-http-client)  ![](https://img.shields.io/badge/status-stable-brightgreen.svg?style=flat-square)  
-  An IPFS Pinning Service HTTP Client library for Go, used by go-ipfs internally.
+  An IPFS Pinning Service HTTP Client library for Go, used by go-ipfs internally in `ipfs pin remote --help` commands.
 - https://openapi-generator.tech/docs/generators#client-generators ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
   Use [YAML file](./ipfs-pinning-service.yaml) to generate client for your language  
 
 ### Server implementations
-- https://github.com/ipfs-shipyard/rb-pinning-service-api ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
-  A Rails app that implements the IPFS Pinning Service API
+- https://github.com/ipfs/ipfs-cluster ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
+   Pinset orchestration for IPFS  – [tracking issue](https://github.com/ipfs/ipfs-cluster/issues/1213)
 - https://github.com/ipfs-shipyard/js-mock-ipfs-pinning-service ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
   Implementation of in-memory service for testing purposes
+- https://github.com/ipfs-shipyard/rb-pinning-service-api ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
+  A Rails app that implements the IPFS Pinning Service API
 - https://openapi-generator.tech/docs/generators#server-generators ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
   Use [YAML file](./ipfs-pinning-service.yaml) to generate server boilerplate for your language
 
@@ -78,15 +82,25 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 
 ### Online services
 
-- Pinata (https://pinata.cloud/documentation#PinningServicesAPI) provides 1GB of storage for free to get you started
+- https://pinata.cloud – ([documentation](https://pinata.cloud/documentation#PinningServicesAPI))
   - `ipfs pin remote service add pinata https://api.pinata.cloud/psa YOUR_JWT`
-- Free Storage for NFTs (https://nft.storage)
+- https://estuary.tech – ([documentation](https://docs.estuary.tech/pinning-list))
+  - `ipfs pin remote service add estuary https://api.estuary.tech/pinning/ YOUR_API_KEY`
+- https://web3.storage – ([documentation](https://docs.web3.storage/how-tos/pinning-services-api))
+  - `ipfs pin remote service add web3-storage https://api.web3.storage/ YOUR_API_KEY`
+- https://nft.storage
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
-- Textile Buckets – [coming soon!](https://github.com/textileio/textile/discussions/499)
 - `{your project could be here}` – open a PR!
 
 ### Timeline
 
+- 2022 Q1
+  - [web3.storage](https://web3.storage) API support: https://docs.web3.storage/how-tos/pinning-services-api
+  - [estuary.tech](https://estuary.tech) API support: https://docs.estuary.tech/pinning-list
+  - Mock server for local development: https://github.com/ipfs-shipyard/js-mock-ipfs-pinning-service
+  - WIP official API client for JS: https://github.com/ipfs-shipyard/js-pinning-service-http-client/
+  - WIP compliance test suite: https://github.com/ipfs/pinning-services-api-spec/issues/64
+  - WIP ipfs-cluster support ([commit](https://github.com/ipfs/ipfs-cluster/commit/9549e0c86e500a0b15020f6e5d48664d1f3ab37d))
 - 2021 Q1
   - [go-ipfs 0.8.0](https://github.com/ipfs/go-ipfs/releases/v0.8.0) shipped with built-in client for v1.0.0 of this API
   - Pinata announces endpoint compatible with this spec: https://pinata.cloud/documentation#PinningServicesAPI
