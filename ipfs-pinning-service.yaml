@@ -4,6 +4,9 @@ info:
   title: 'IPFS Pinning Service API'
   x-logo:
     url: "https://bafybeidehxarrk54mkgyl5yxbgjzqilp6tkaz2or36jhq24n3rdtuven54.ipfs.dweb.link/?filename=ipfs-pinning-service.svg"
+  contact:
+    name: IPFS
+    url: https://github.com/ipfs/pinning-services-api-spec
   description: "
   
   
@@ -274,9 +277,13 @@ Pin objects can be listed by executing `GET /pins` with optional parameters:
 servers:
   - url: https://pinning-service.example.com
 
+tags:
+  - name: pins
+
 paths:
   /pins:
     get:
+      operationId: getPins
       summary: List pin objects
       description: List all the pin objects, matching optional filters; when no filter is provided, only successful pins are returned
       tags:
@@ -310,6 +317,7 @@ paths:
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     post:
+      operationId: addPin
       summary: Add pin object
       description: Add a new pin object for the current access token
       tags:
@@ -348,6 +356,7 @@ paths:
         schema:
           type: string
     get:
+      operationId: getPinByRequestId
       summary: Get pin object
       description: Get a pin object and its status
       tags:
@@ -372,6 +381,7 @@ paths:
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     post:
+      operationId: replacePinByRequestId
       summary: Replace pin object
       description: Replace an existing pin object (shortcut for executing remove and add operations in one step to avoid unnecessary garbage collection of blocks present in both recursive pins)
       tags:
@@ -402,6 +412,7 @@ paths:
         '5XX':
           $ref: '#/components/responses/InternalServerError'
     delete:
+      operationId: deletePinByRequestId
       summary: Remove pin object
       description: Remove a pin object
       tags:
