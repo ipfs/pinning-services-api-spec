@@ -90,6 +90,8 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - `ipfs pin remote service add web3-storage https://api.web3.storage/ YOUR_API_KEY`
 - https://nft.storage
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
+- https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning#how-to-re-pin-existing-ipfs-cids-with-filebase) 
+  - `ipfs pin remote service add filebase https://api.filebase.com/v1/ipfs "ACCESS-KEY:SECRET-KEY:BUCKET-NAME"` 
 - `{your project could be here}` – open a PR!
 
 ### Timeline
