@@ -644,7 +644,7 @@ components:
       example: exact
 
     status:
-      description: Return pin objects for pins with the specified status
+      description: Return pin objects for pins with the specified status (when missing, service should default to pinned only)
       name: status
       in: query
       required: false
