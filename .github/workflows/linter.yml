@@ -1,11 +1,10 @@
 ---
-name: Lint
+name: lint
 on:
   push:
 
 jobs:
-  build:
-    name: Lint
+  super-linter:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -16,3 +15,12 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_OPENAPI: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  spectral-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - run: npx @stoplight/spectral-cli lint ./ipfs-pinning-service.yaml
