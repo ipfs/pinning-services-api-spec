@@ -64,6 +64,8 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   An IPFS Pinning Service HTTP Client library for Go, used by go-ipfs internally in `ipfs pin remote --help` commands.
 - https://openapi-generator.tech/docs/generators#client-generators ![](https://img.shields.io/badge/status-reliable-green.svg?style=flat-square)  
   Use [YAML file](./ipfs-pinning-service.yaml) to generate client for your language  
+- [auspinner](https://github.com/2color/auspinner)
+  A stateless CLI tool to pin and serve CAR files to IPFS pinning services using HTTP and Bitswap.
 
 ### Server implementations
 - https://github.com/ipfs/ipfs-cluster ![](https://img.shields.io/badge/status-wip-orange.svg?style=flat-square)
@@ -90,6 +92,8 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - `ipfs pin remote service add web3-storage https://api.web3.storage/ YOUR_API_KEY`
 - https://nft.storage
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
+- https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning))
+  - `ipfs pin remote service add filebase https://api.filebase.io/v1/ipfs SECRET-ACCESS-TOKEN`
 - `{your project could be here}` – open a PR!
 
 ### Timeline
