@@ -478,7 +478,7 @@ components:
           description: Immutable timestamp indicating when a pin request entered a pinning service; can be used for filtering results and pagination
           type: string
           format: date-time  # RFC 3339, section 5.6
-          example: "2020-07-27T17:32:28Z"
+          example: "2020-07-27T17:32:28.276Z"
         pin:
           $ref: '#/components/schemas/Pin'
         delegates:
@@ -595,7 +595,7 @@ components:
       schema:
         type: string
         format: date-time  # RFC 3339, section 5.6
-      example: "2020-07-27T17:32:28Z"
+      example: "2020-07-27T17:32:28.276Z"
 
     after:
       description: Return results created (queued) after provided timestamp
@@ -605,7 +605,7 @@ components:
       schema:
         type: string
         format: date-time  # RFC 3339, section 5.6
-      example: "2020-07-27T17:32:28Z"
+      example: "2020-07-27T17:32:28.276Z"
 
     limit:
       description: Max records to return
