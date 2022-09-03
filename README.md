@@ -92,12 +92,14 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - `ipfs pin remote service add web3-storage https://api.web3.storage/ YOUR_API_KEY`
 - https://nft.storage
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
-- https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning))
+- https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning) + [IPFS Pin Sync](https://docs.filebase.com/ipfs/ipfs-pin-sync))
   - `ipfs pin remote service add filebase https://api.filebase.io/v1/ipfs SECRET-ACCESS-TOKEN`
 - `{your project could be here}` – open a PR!
 
 ### Timeline
 
+- 2022 Q3
+  - [IPFS Pin Sync](https://docs.filebase.com/ipfs/ipfs-pin-sync) is announced by Filebase
 - 2022 Q1
   - [web3.storage](https://web3.storage) API support: https://docs.web3.storage/how-tos/pinning-services-api
   - [estuary.tech](https://estuary.tech) API support: https://docs.estuary.tech/pinning-list
