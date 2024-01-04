@@ -86,10 +86,6 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
 
 - https://pinata.cloud – ([documentation](https://pinata.cloud/documentation#PinningServicesAPI))
   - `ipfs pin remote service add pinata https://api.pinata.cloud/psa YOUR_JWT`
-- https://estuary.tech – ([documentation](https://docs.estuary.tech/pinning-list))
-  - `ipfs pin remote service add estuary https://api.estuary.tech/pinning/ YOUR_API_KEY`
-- https://web3.storage – ([documentation](https://docs.web3.storage/how-tos/pinning-services-api))
-  - `ipfs pin remote service add web3-storage https://api.web3.storage/ YOUR_API_KEY`
 - https://nft.storage
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
 - https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning) + [IPFS Pin Sync](https://docs.filebase.com/ipfs/ipfs-pin-sync))
