@@ -114,6 +114,7 @@ The user sends a `Pin` object to `POST /pins` and receives a `PinStatus` respons
 
 - `pinning` is active: the pinning service is trying to retrieve the CIDs by finding providers for all involved CIDs, connect to these providers and download data from them.
 
+
 When a new pin object is created it typically starts in a `queued` state. Once the pinning service actively seeks to retrieve the file it changes to `pinning`. `pinning` typically means that the data behind `Pin.cid` was not found on the pinning service and is being fetched from the IPFS network at large, which may take time.
 
 In either case, the user can periodically check pinning progress via `GET /pins/{requestid}` until pinning is `pinned` or `failed`, or the user decides to remove the pending pin.
