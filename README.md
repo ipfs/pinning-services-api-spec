@@ -90,10 +90,14 @@ Built-in support for pinning services exposing this API is coming to IPFS toolin
   - `ipfs pin remote service add nft-storage https://nft.storage/api YOUR_API_KEY`
 - https://filebase.com - ([documentation](https://docs.filebase.com/storage-networks/ipfs/ipfs-pinning) + [IPFS Pin Sync](https://docs.filebase.com/ipfs/ipfs-pin-sync))
   - `ipfs pin remote service add filebase https://api.filebase.io/v1/ipfs SECRET-ACCESS-TOKEN`
+- https://minpin.me - ([documentation](https://minpin.me/docs/getting-started))
+  - `ipfs pin remote service add minpin https://minpin.me YOUR_JWT`
 - `{your project could be here}` – open a PR!
 
 ### Timeline
 
+- 2026 Q3
+  - [MinPin](https://minpin.me) API support: https://minpin.me/docs/getting-started
 - 2022 Q3
   - [IPFS Pin Sync](https://docs.filebase.com/ipfs/ipfs-pin-sync) is announced by Filebase
 - 2022 Q1
